@@ -83,3 +83,12 @@ fetch("https://japceibal.github.io/emercado-api/cats_products/101.json")
         bugattiSoldCount.textContent = "Vendidos: " + bugatti.soldCount
 
     })
+
+// Redirección a login.html si no hay sesión iniciada
+document.addEventListener('DOMContentLoaded', function() {
+	// Verifica si hay un usuario guardado en sessionStorage
+	const usuario = sessionStorage.getItem('usuario');
+	if (!usuario) {
+		window.location.href = 'login.html';
+	}
+});
