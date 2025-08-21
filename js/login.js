@@ -1,3 +1,4 @@
+
 // Guardar usuario en sessionStorage al hacer login y redirigir a products.html
 document.addEventListener('DOMContentLoaded', function() {
 	const form = document.querySelector('form');
@@ -15,3 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
 		});
 	}
 });
+
+
+function redireccion(event) {
+  event.preventDefault(); 
+  window.location.href = "categories.html";
+}
+
