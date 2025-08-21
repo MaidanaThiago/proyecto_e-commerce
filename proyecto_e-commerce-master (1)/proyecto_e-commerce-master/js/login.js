@@ -1,5 +1,6 @@
 
-// Guardar usuario en sessionStorage al hacer login y redirigir a products.html
+
+// Guardar usuario en sessionStorage al hacer login y redirigir a la página original si existe
 document.addEventListener('DOMContentLoaded', function() {
 	const form = document.querySelector('form');
 	if (form) {
@@ -9,7 +10,14 @@ document.addEventListener('DOMContentLoaded', function() {
 			const password = document.getElementById('password').value.trim();
 			if (username && password) {
 				sessionStorage.setItem('usuario', username);
-				window.location.href = 'products.html';
+				// Redirige a la página original si existe, si no a products.html
+				const redirect = sessionStorage.getItem('redirectAfterLogin');
+				if (redirect) {
+					sessionStorage.removeItem('redirectAfterLogin');
+					window.location.href = redirect;
+				} else {
+					window.location.href = 'index.html';
+				}
 			} else {
 				alert('Por favor, complete usuario y contraseña.');
 			}
@@ -17,22 +25,5 @@ document.addEventListener('DOMContentLoaded', function() {
 	}
 });
 
-
-function redireccion(event) {
-  event.preventDefault(); 
-  window.location.href = "categories.html";
-}
-function redireccion(event) {
-  event.preventDefault();
-  const usuario = document.getElementById("username").value.trim();
-  const contraseña = document.getElementById("password").value.trim();
-
-
-  if(usuario === "" || contraseña === ""){
-    alert("Todos los campos son obligatorios");
-  }else{
-  window.location.href = "categories.html";
-  }
-}
 
 

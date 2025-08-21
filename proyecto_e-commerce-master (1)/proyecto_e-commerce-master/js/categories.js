@@ -1,3 +1,12 @@
+// Redirección a login.html si no hay sesión iniciada
+document.addEventListener('DOMContentLoaded', function() {
+    const usuario = sessionStorage.getItem('usuario');
+    if (!usuario) {
+        sessionStorage.setItem('redirectAfterLogin', window.location.pathname.split('/').pop());
+        window.location.href = 'login.html';
+        return;
+    }
+});
 const ORDER_ASC_BY_NAME = "AZ";
 const ORDER_DESC_BY_NAME = "ZA";
 const ORDER_BY_PROD_COUNT = "Cant.";
