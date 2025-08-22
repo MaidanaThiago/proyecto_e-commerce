@@ -40,121 +40,12 @@
     </div>
   </nav>
   <main class="pb-5 container">
-
-    <!-- Tarjeta para el Susuki Celerio -->
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-      <h5 class="card-title" id="susukiCardTitle"></h5>
-      <h6 class="card-subtitle" id="susukiCardSubtitle"></h6>
-      <img src="img\susuki_celerio.jpg" class="card-img-top" alt="Susuki Celerio">
-      <h6 class="card-subtitle">Descripción</h6>
-      <p class="card-text" id="susukiDescription"></p>
-      <p class="card-text" id="susukiPrice"></p>
-      <p class="card-text" id="susukiSoldCount"></p>
-      <a href="#" class="btn btn-primary">Más detalles</a>
-      <a href="#" class="btn btn-primary"><img src="img\carrito_supermercado.png" class="card-img-top" alt="Carrito de supermercado"></a>
-      <a href="#" class="btn btn-primary">Comprar ahora</a>
-      </div>
+<!------------------------ PRUEBA para funcion de crear un GRID ---------------------------------------->
+  <!-- Contenedor de productos (aquí se cargarán las tarjetas) -->
+    <div id="productsContainer" class="row">
+      <!-- Las tarjetas se generarán automáticamente aquí -->
     </div>
-
-    <!------------------------ Grid de Bootstrap con 3 columnas ---------------------------------------------->
-    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-    <!-- Tarjeta para el Suzuki Celerio -->
-      <div class="col">
-        <div class="card-product">
-          <div class="card-img-container">
-            <img src="img/susuki_celerio.jpg" class="card-img-top" alt="Suzuki Celerio">
-          </div>
-          <div class="card-body">
-            <h5 class="card-title">Suzuki</h5>
-            <h6 class="card-subtitle">Celerio</h6>
-            
-            <p class="card-text">Un auto que se ha ganado la buena fama por su economía con el combustible. Perfecto para la ciudad.</p>
-            
-            <div class="price-container">
-              <div class="price">USD 12.500</div>
-              <div class="sales">Vendidos: 25</div>
-            </div>
-            
-            <div class="btn-container">
-              <a href="#" class="btn btn-details">
-                <i class="bi bi-info-circle icon"></i>Detalles
-              </a>
-              <a href="#" class="btn btn-buy">
-                <i class="bi bi-cart3 icon"></i>Comprar
-              </a>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!------------------------ Grid de Bootstrap con 3 columnas -------------------------------------------->
-
-    <!-- Tarjeta para el Chevrolet Onix Joy -->
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-      <h5 class="card-title" id="chevroletCardTitle"></h5>
-      <h6 class="card-subtitle" id="chevroletCardSubtitle"></h6>
-      <img src="img\chevrolet_onix_joy.jpg" class="card-img-top" alt="Chevrolet Onix Joy">
-      <h6 class="card-subtitle">Descripción</h6>
-      <p class="card-text" id="chevroletDescription"></p>
-      <p class="card-text" id="chevroletPrice"></p>
-      <p class="card-text" id="chevroletSoldCount"></p>
-      <a href="#" class="btn btn-primary">Más detalles</a>
-      <a href="#" class="btn btn-primary"><img src="img\carrito_supermercado.png" class="card-img-top" alt="Carrito de supermercado"></a>
-      <a href="#" class="btn btn-primary">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Tarjeta para el Fiat Way -->
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-      <h5 class="card-title" id="fiatCardTitle"></h5>
-      <h6 class="card-subtitle" id="fiatCardSubtitle"></h6>
-      <img src="img\fiat_way.jpg" class="card-img-top" alt="Fiat Way">
-      <h6 class="card-subtitle">Descripción</h6>
-      <p class="card-text" id="fiatDescription"></p>
-      <p class="card-text" id="fiatPrice"></p>
-      <p class="card-text" id="fiatSoldCount"></p>
-      <a href="#" class="btn btn-primary">Más detalles</a>
-      <a href="#" class="btn btn-primary"><img src="img\carrito_supermercado.png" class="card-img-top" alt="Carrito de supermercado"></a>
-      <a href="#" class="btn btn-primary">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Tarjeta para el Peugeot 208 -->
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-      <h5 class="card-title" id="peugeotCardTitle"></h5>
-      <h6 class="card-subtitle" id="peugeotCardSubtitle"></h6>
-      <img src="img\peugeot_208.jpg" class="card-img-top" alt="Peugeot 208">
-      <h6 class="card-subtitle">Descripción</h6>
-      <p class="card-text" id="peugeotDescription"></p>
-      <p class="card-text" id="peugeotPrice"></p>
-      <p class="card-text" id="peugeotSoldCount"></p>
-      <a href="#" class="btn btn-primary">Más detalles</a>
-      <a href="#" class="btn btn-primary"><img src="img\carrito_supermercado.png" class="card-img-top" alt="Carrito de supermercado"></a>
-      <a href="#" class="btn btn-primary">Comprar ahora</a>
-      </div>
-    </div>
-
-    <!-- Tarjeta para el Bugatti Chiron -->
-    <div class="card" style="width: 18rem;">
-      <div class="card-body">
-      <h5 class="card-title" id="bugattiCardTitle"></h5>
-      <h6 class="card-subtitle" id="bugattiCardSubtitle"></h6>
-      <img src="img\bugatti_chiron.jpg" class="card-img-top" alt="Bugatti Chiron">
-      <h6 class="card-subtitle">Descripción</h6>
-      <p class="card-text" id="bugattiDescription"></p>
-      <p class="card-text" id="bugattiPrice"></p>
-      <p class="card-text" id="bugattiSoldCount"></p>
-      <a href="#" class="btn btn-primary">Más detalles</a>
-      <a href="#" class="btn btn-primary"><img src="img\carrito_supermercado.png" class="card-img-top" alt="Carrito de supermercado"></a>
-      <a href="#" class="btn btn-primary">Comprar ahora</a>
-      </div>
-    </div>
-
-
+<!------------------------ PRUEBA para funcion de crear un GRID ---------------------------------------->
   </main>
   <footer class="text-muted">
     <div class="container">
