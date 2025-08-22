@@ -84,3 +84,15 @@
     footer a:hover {
       text-decoration: underline;
     }
+
+    #fotoUsuario {
+      width: 25px;
+      height: 25px;
+      float: inline-start;
+    }
+
+    #fotoPassword {
+      width: 25px;
+      height: 25px;
+      float: inline-start;
+    }
