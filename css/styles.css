@@ -306,3 +306,37 @@ a.custom-card:hover {
   height: 20px;
   width: 20px;
 }
+/*Media query para dispositivos con ancho menor a 400px (IphoneSE)*/
+@media (max-width: 400px) {
+  .btn-container {
+    flex-direction: column;
+  }
+  .btn{
+    width: 100%;
+  }
+  .price-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+  
+  .card-img-container {
+    padding: 20px 20px 15px;
+  }
+  
+  .card-body {
+    padding: 20px;
+  }
+  
+  .card-title {
+    font-size: 1.4rem;
+  }
+  
+  .card-subtitle {
+    font-size: 1rem;
+  }
+  
+  .price {
+    font-size: 1.5rem;
+  }
+}
