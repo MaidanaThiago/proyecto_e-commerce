@@ -83,6 +83,7 @@
 
     footer a:hover {
       text-decoration: underline;
+    }
 
     #fotoUsuario {
       width: 25px;
@@ -143,4 +144,3 @@
     width: 100%;
   }
 }
- }
