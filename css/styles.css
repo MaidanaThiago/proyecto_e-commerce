@@ -70,6 +70,7 @@ nav a {
 footer {
   padding-top: 3rem;
   padding-bottom: 3rem;
+  background-color: var(--background-footer);
 }
 
 footer p {
@@ -191,9 +192,12 @@ a.custom-card:hover {
 
 /*Grid de Bootstrap*/
 :root {
-  --primary: #2c3e50;
-  --accent: #e7563c;
+  --primary: #3b2620;
+  --accent: #d39c6a;
   --success: #27ae60;
+  --background-main: #FFE9C8;
+  --background-footer: #e1b988;
+  --text-main: #976f4e;
 }
 .card-product {
   border: none;
@@ -225,6 +229,8 @@ a.custom-card:hover {
 .card-body {
   padding: 25px;
 }
+body {
+  background: var(--background-main);
 .card-title {
   color: var(--primary);
   font-weight: 800;

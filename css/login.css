@@ -1,11 +1,64 @@
 
+
 .container {
-      flex: 1;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      gap: 400px;
-    }
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 400px;
+  
+}
+
+
+/* Responsive para celulares */
+@media (max-width: 400px) {
+  .container {
+    flex-direction: column;
+    gap: 5px;
+  }
+  .logo-box {
+    padding: 5px !important;
+    margin-bottom: 2%;
+    margin-right: 70%;
+    
+  }
+  .logo-box img {
+    width: 60px !important;
+    height: 60px !important;
+  }
+  .registro {
+    border-radius: 8%!important;
+    width: auto !important;
+    max-width: 350px;
+    height: auto !important;
+    min-height: 420px;
+  }
+  .registro h2 {
+    font-weight: bold;
+    font-size: 1.8rem;
+    margin-bottom: 18px;
+  }
+  .input-group label {
+    font-size: 18px;
+  }
+  .input-group input {
+    padding: 8px;
+    font-size: 18px;
+  }
+  .btn {
+    padding: 10px;
+    font-size: 18px;
+  }
+  #fotoUsuario, #fotoPassword {
+    width: 18px;
+    height: 18px;
+  }
+  footer {
+    display: flex !important;
+    font-size: 13px;
+    padding: 2px !important;
+  }
+}
 
     .logo-box {
       background: white;
@@ -27,7 +80,6 @@
       height: 510px;
       border-radius: 10px;
       padding: 40px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     }
 
     .registro h2 {
@@ -73,10 +125,19 @@
       padding: 17px;
       font-size: 16px;
       width: 100%;
+      
     }
 
     footer a {
-      color: black;
+      justify-content: center;
+      text-align: center;
+      color: #3b2620;
+      font-weight: bold;
+      text-decoration: none;
+    }
+p{
+  
+    color: #976f4e;
       font-weight: bold;
       text-decoration: none;
     }
