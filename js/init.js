@@ -39,3 +39,23 @@ let getJSONData = function(url){
         return result;
     });
 }
+/*DESAFIATE! agregar en la esquina derecha el nombre del usuario ingresado*/
+document.addEventListener('DOMContentLoaded', function () {
+  const usuario = sessionStorage.getItem('usuario');
+  if (!usuario) return;
+
+  const navList = document.querySelector('nav .navbar-nav');
+  if (!navList) return;
+
+  if (!document.getElementById('nav-username')) {
+    const li = document.createElement('li');
+    li.className = 'nav-item ms-auto';
+    const a = document.createElement('a');
+    a.className = 'nav-link';
+    a.id = 'nav-username';
+    a.textContent = usuario;
+    a.href = '#';
+    li.appendChild(a);
+    navList.appendChild(li);
+  }
+});
