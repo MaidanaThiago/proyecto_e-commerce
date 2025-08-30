@@ -20,6 +20,7 @@
     padding: 5px !important;
     margin-bottom: 2%;
     margin-right: 70%;
+    border-radius: 20% !important;
     
   }
   .logo-box img {
@@ -29,9 +30,9 @@
   .registro {
     border-radius: 8%!important;
     width: auto !important;
-    max-width: 350px;
+    max-width: 80%;
     height: auto !important;
-    min-height: 420px;
+    min-height: 80%;
   }
   .registro h2 {
     font-weight: bold;
@@ -184,17 +185,17 @@ p{
   }
 
   .logo-box {
-    padding: 20px 40px;
+    padding: 10px 10px;
     display: inline-block;
     position: absolute;  
     top: 20px;
     left: 20px;
-    border-radius: 40px;
+    border-radius: 20px;
   }
 
   .logo-box img {
-    height: 50px;
-    width: 50px;
+    height: 100px;
+    width: 100px;
   }
 
   footer {
