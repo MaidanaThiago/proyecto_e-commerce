@@ -68,3 +68,65 @@ function loadProducts() {
             `;
         });
 }
+// Array para guardar los productos
+let productsArray = [];
+
+// Función para mostrar la lista de productos
+function showProductsList(array) {
+    let htmlContentToAppend = "";
+
+    if (array.length === 0) {
+        htmlContentToAppend = `<h4>No se encontraron productos en esta categoría.</h4>`;
+    } else {
+        for (let i = 0; i < array.length; i++) {
+            let product = array[i];
+            htmlContentToAppend += `
+            <div class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="${product.imgSrc}" alt="product image" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <div class="mb-1">
+                                <h4>${product.name} - ${product.currency} ${product.cost}</h4>
+                                <p>${product.description}</p>
+                            </div>
+                            <small class="text-muted">${product.soldCount} artículos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+    }
+
+    document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+}
+
+// Cuando el documento se carga
+document.addEventListener("DOMContentLoaded", function () {
+    // Obtiene el ID de la categoría del almacenamiento local
+    const catID = localStorage.getItem("catID");
+
+    if (!catID) {
+        // Si no hay categoría seleccionada, muestra un mensaje de error
+        document.getElementById("cat-list-container").innerHTML =
+            `<h4 class="text-danger">No se encontró ninguna categoría seleccionada.</h4>`;
+        return;
+    }
+
+    // Construye la URL usando el ID dinámico
+    const URL_COMPLETA = PRODUCTS_URL + catID + EXT_TYPE;
+
+    // Hace la solicitud y carga los productos
+    getJSONData(URL_COMPLETA).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            productsArray = resultObj.data.products;
+            showProductsList(productsArray);
+        } else {
+            document.getElementById("cat-list-container").innerHTML =
+                `<h4 class="text-danger">Error al cargar los productos.</h4>`;
+        }
+    });
+});
