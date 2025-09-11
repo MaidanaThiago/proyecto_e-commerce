@@ -1,7 +1,7 @@
 let productsArray = [];
 
 // Redirección a login.html si no hay sesión iniciada
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const usuario = sessionStorage.getItem('usuario');
     if (!usuario) {
         window.location.href = 'login.html';
@@ -12,14 +12,43 @@ document.addEventListener('DOMContentLoaded', function() {
     // Filtro de precios
     const filterBtn = document.getElementById('filterPriceBtn');
     if (filterBtn) {
-        filterBtn.addEventListener('click', function() {
+        filterBtn.addEventListener('click', function () {
             const min = parseFloat(document.getElementById('filterPriceMin').value) || 0;
             const max = parseFloat(document.getElementById('filterPriceMax').value) || Infinity;
-            const filteredProducts = productsArray.filter(product => product.cost >= min && product.cost <= max);
-            showProducts(filteredProducts);
+            productsArray = productsArray.filter(product => product.cost >= min && product.cost <= max);
+            showProducts(productsArray);
         });
     }
 });
+
+// Ordenar tarjetas
+const orderSelect = document.getElementById('orderProducts');
+if (orderSelect) {
+
+    orderSelect.addEventListener("change", (e) => {
+        if (e.target.value == 'priceAsc') {
+            productsArray.sort(function (a, b) {
+                if (a.cost < b.cost) return -1;
+                if (a.cost > b.cost) return 1;
+                return 0;
+            });
+
+        } else if (e.target.value == 'priceDes') {
+            productsArray.sort(function (a, b) {
+                if (a.cost > b.cost) return -1;
+                if (a.cost < b.cost) return 1;
+                return 0;
+            });
+        } else if (e.target.value == 'relevance') {
+            productsArray.sort(function (a, b) {
+                if (a.soldCount > b.soldCount) return -1;
+                if (a.soldCount < b.soldCount) return 1;
+                return 0;
+            });
+        }
+        showProducts(productsArray);
+    });
+}
 
 function createProductCard(product) {
     const nameParts = product.name.split(' ');
