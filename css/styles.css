@@ -256,6 +256,7 @@ a.custom-card:hover {
 }
 body {
   background: var(--background-main);
+}
 .card-title {
   color: var(--primary);
   font-weight: 800;
