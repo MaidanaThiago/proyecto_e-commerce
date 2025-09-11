@@ -1,19 +1,30 @@
-// Redirección a login.html si no hay sesión iniciada  // VERIFICACIÓN DE USUARIO
+let productsArray = [];
+
+// Redirección a login.html si no hay sesión iniciada
 document.addEventListener('DOMContentLoaded', function() {
-	// Verifica si hay un usuario guardado en sessionStorage
-	const usuario = sessionStorage.getItem('usuario');
-	if (!usuario) {
-		window.location.href = 'login.html';
-	    return; // Importante: salir si redirige
+    const usuario = sessionStorage.getItem('usuario');
+    if (!usuario) {
+        window.location.href = 'login.html';
+        return;
     }
     loadProducts();
+
+    // Filtro de precios
+    const filterBtn = document.getElementById('filterPriceBtn');
+    if (filterBtn) {
+        filterBtn.addEventListener('click', function() {
+            const min = parseFloat(document.getElementById('filterPriceMin').value) || 0;
+            const max = parseFloat(document.getElementById('filterPriceMax').value) || Infinity;
+            const filteredProducts = productsArray.filter(product => product.cost >= min && product.cost <= max);
+            showProducts(filteredProducts);
+        });
+    }
 });
-//
+
 function createProductCard(product) {
     const nameParts = product.name.split(' ');
     const title = nameParts[0];
     const subtitle = nameParts.slice(1).join(' ');
-    
     return `
         <div class="col">
             <div class="card-product">
@@ -23,14 +34,11 @@ function createProductCard(product) {
                 <div class="card-body">
                     <h5 class="card-title">${title}</h5>
                     <h6 class="card-subtitle">${subtitle}</h6>
-                    
                     <p class="card-text">${product.description}</p>
-                    
                     <div class="price-container">
                         <div class="price">${product.currency} ${product.cost}</div>
                         <div class="sales">Vendidos: ${product.soldCount}</div>
                     </div>
-                    
                     <div class="btn-container">
                         <button class="btn btn-details btn-view-details" data-product-id="${product.id}">
                             <i class="bi bi-info-circle icon"></i>Detalles
@@ -44,6 +52,16 @@ function createProductCard(product) {
         </div>
     `;
 }
+
+function showProducts(products) {
+    const productsContainer = document.getElementById('productsContainer');
+    productsContainer.innerHTML = `
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            ${products.map(createProductCard).join('')}
+        </div>
+    `;
+}
+
 // Función principal para cargar y mostrar productos
 function loadProducts() {
     fetch("https://japceibal.github.io/emercado-api/cats_products/101.json")
@@ -52,12 +70,8 @@ function loadProducts() {
             return response.json();
         })
         .then(data => {
-            const productsContainer = document.getElementById('productsContainer');
-            productsContainer.innerHTML = `
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    ${data.products.map(createProductCard).join('')}
-                </div>
-            `;
+            productsArray = data.products; // Guardar productos en variable global
+            showProducts(productsArray);   // Mostrar todos al inicio
         })
         .catch(error => {
             console.error('Error cargando productos:', error);
