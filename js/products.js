@@ -46,7 +46,8 @@ function createProductCard(product) {
 }
 // Función principal para cargar y mostrar productos
 function loadProducts() {
-    fetch("https://japceibal.github.io/emercado-api/cats_products/101.json")
+    let catId = localStorage.getItem('catID')
+    fetch(`https://japceibal.github.io/emercado-api/cats_products/${catId}.json`)
         .then(response => {
             if (!response.ok) throw new Error('Error en la respuesta');
             return response.json();
