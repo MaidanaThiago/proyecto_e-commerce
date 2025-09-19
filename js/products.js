@@ -1,42 +1,59 @@
-// Redirección a login.html si no hay sesión iniciada  // VERIFICACIÓN DE USUARIO
-document.addEventListener('DOMContentLoaded', function() {
-	// Verifica si hay un usuario guardado en sessionStorage
-	const usuario = sessionStorage.getItem('usuario');
-	if (!usuario) {
-		window.location.href = 'login.html';
-	    return; // Importante: salir si redirige
+let productsArray = [];
+
+// Redirección a login.html si no hay sesión iniciada
+document.addEventListener('DOMContentLoaded', function () {
+    const usuario = sessionStorage.getItem('usuario');
+    if (!usuario) {
+        window.location.href = 'login.html';
+        return;
     }
     loadProducts();
 
-    // Delegación de eventos para ambos botones
-    document.addEventListener('click', function(e) {
-        // Para el botón de Detalles
-        if (e.target.closest('.btn-view-details')) {
-            const button = e.target.closest('.btn-view-details');
-            const productId = button.getAttribute('data-product-id');
-            
-            localStorage.setItem('selectedProductId', productId);
-            window.location.href = 'product-info.html';
-            return; // Salir temprano
-        }
-        
-        // Para el botón de Comprar
-        if (e.target.closest('.btn-buy-now')) {
-            const button = e.target.closest('.btn-buy-now');
-            const productId = button.getAttribute('data-product-id');
-            
-            // Tu lógica de compra aquí
-            console.log('Comprar producto:', productId);
-            // addToCart(productId); // Ejemplo de función
-        }
-    });
+    // Filtro de precios
+    const filterBtn = document.getElementById('filterPriceBtn');
+    if (filterBtn) {
+        filterBtn.addEventListener('click', function () {
+            const min = parseFloat(document.getElementById('filterPriceMin').value) || 0;
+            const max = parseFloat(document.getElementById('filterPriceMax').value) || Infinity;
+            productsArray = productsArray.filter(product => product.cost >= min && product.cost <= max);
+            showProducts(productsArray);
+        });
+    }
 });
-//
+
+// Ordenar tarjetas
+const orderSelect = document.getElementById('orderProducts');
+if (orderSelect) {
+
+    orderSelect.addEventListener("change", (e) => {
+        if (e.target.value == 'priceAsc') {
+            productsArray.sort(function (a, b) {
+                if (a.cost < b.cost) return -1;
+                if (a.cost > b.cost) return 1;
+                return 0;
+            });
+
+        } else if (e.target.value == 'priceDes') {
+            productsArray.sort(function (a, b) {
+                if (a.cost > b.cost) return -1;
+                if (a.cost < b.cost) return 1;
+                return 0;
+            });
+        } else if (e.target.value == 'relevance') {
+            productsArray.sort(function (a, b) {
+                if (a.soldCount > b.soldCount) return -1;
+                if (a.soldCount < b.soldCount) return 1;
+                return 0;
+            });
+        }
+        showProducts(productsArray);
+    });
+}
+
 function createProductCard(product) {
     const nameParts = product.name.split(' ');
     const title = nameParts[0];
     const subtitle = nameParts.slice(1).join(' ');
-    
     return `
         <div class="col">
             <div class="card-product">
@@ -46,14 +63,11 @@ function createProductCard(product) {
                 <div class="card-body">
                     <h5 class="card-title">${title}</h5>
                     <h6 class="card-subtitle">${subtitle}</h6>
-                    
                     <p class="card-text">${product.description}</p>
-                    
                     <div class="price-container">
                         <div class="price">${product.currency} ${product.cost}</div>
                         <div class="sales">Vendidos: ${product.soldCount}</div>
                     </div>
-                    
                     <div class="btn-container">
                         <button class="btn btn-details btn-view-details" data-product-id="${product.id}">
                             <i class="bi bi-info-circle icon"></i>Detalles
@@ -67,6 +81,16 @@ function createProductCard(product) {
         </div>
     `;
 }
+
+function showProducts(products) {
+    const productsContainer = document.getElementById('productsContainer');
+    productsContainer.innerHTML = `
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            ${products.map(createProductCard).join('')}
+        </div>
+    `;
+}
+
 // Función principal para cargar y mostrar productos
 function loadProducts() {
     let catId = localStorage.getItem('catID')
@@ -76,12 +100,8 @@ function loadProducts() {
             return response.json();
         })
         .then(data => {
-            const productsContainer = document.getElementById('productsContainer');
-            productsContainer.innerHTML = `
-                <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-                    ${data.products.map(createProductCard).join('')}
-                </div>
-            `;
+            productsArray = data.products; // Guardar productos en variable global
+            showProducts(productsArray);   // Mostrar todos al inicio
         })
         .catch(error => {
             console.error('Error cargando productos:', error);
@@ -92,3 +112,66 @@ function loadProducts() {
             `;
         });
 }
+// Array para guardar los productos
+
+
+// Función para mostrar la lista de productos
+function showProductsList(array) {
+    let htmlContentToAppend = "";
+
+    if (array.length === 0) {
+        htmlContentToAppend = `<h4>No se encontraron productos en esta categoría.</h4>`;
+    } else {
+        for (let i = 0; i < array.length; i++) {
+            let product = array[i];
+            htmlContentToAppend += `
+            <div class="list-group-item list-group-item-action">
+                <div class="row">
+                    <div class="col-3">
+                        <img src="${product.imgSrc}" alt="product image" class="img-thumbnail">
+                    </div>
+                    <div class="col">
+                        <div class="d-flex w-100 justify-content-between">
+                            <div class="mb-1">
+                                <h4>${product.name} - ${product.currency} ${product.cost}</h4>
+                                <p>${product.description}</p>
+                            </div>
+                            <small class="text-muted">${product.soldCount} artículos</small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            `;
+        }
+    }
+
+    document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
+}
+
+// Cuando el documento se carga
+document.addEventListener("DOMContentLoaded", function () {
+    // Obtiene el ID de la categoría del almacenamiento local
+    const catID = localStorage.getItem("catID");
+
+    if (!catID) {
+        // Si no hay categoría seleccionada, muestra un mensaje de error
+        document.getElementById("cat-list-container").innerHTML =
+            `<h4 class="text-danger">No se encontró ninguna categoría seleccionada.</h4>`;
+        return;
+    }
+
+    // Construye la URL usando el ID dinámico
+    const URL_COMPLETA = PRODUCTS_URL + catID + EXT_TYPE;
+
+    // Hace la solicitud y carga los productos
+    getJSONData(URL_COMPLETA).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            productsArray = resultObj.data.products;
+            showProductsList(productsArray);
+        } else {
+            document.getElementById("cat-list-container").innerHTML =
+                `<h4 class="text-danger">Error al cargar los productos.</h4>`;
+        }
+    });
+});
+

@@ -38,6 +38,31 @@
     </div>
   </nav>
   <main class="pb-5 container">
+
+     <div >
+          <span >Ordenar por:</span>
+          <select  name="orderProducts" id="orderProducts">
+            <option value="" disabled selected>Por defecto </option>
+            <option value="priceAsc">Menor precio </option>
+            <option value="priceDes"> Mayor precio</option>
+            <option value="relevance"> Mayor relevancia</option>
+          </select>
+        
+      </div>
+
+     </div>
+
+    <div class="row mb-3">
+      <div class="col-md-3">
+        <input type="number" id="filterPriceMin" class="form-control" placeholder="Precio mínimo">
+      </div>
+      <div class="col-md-3">
+        <input type="number" id="filterPriceMax" class="form-control" placeholder="Precio máximo">
+      </div>
+      <div class="col-md-3">
+        <button id="filterPriceBtn" class="btn btn-primary">Filtrar</button>
+      </div>
+    </div>
 <!------------------------ PRUEBA para funcion de crear un GRID ---------------------------------------->
   <!-- Contenedor de productos (aquí se cargarán las tarjetas) -->
     <div id="productsContainer" class="row">
