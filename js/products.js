@@ -7,6 +7,29 @@ document.addEventListener('DOMContentLoaded', function() {
 	    return; // Importante: salir si redirige
     }
     loadProducts();
+
+    // Delegación de eventos para ambos botones
+    document.addEventListener('click', function(e) {
+        // Para el botón de Detalles
+        if (e.target.closest('.btn-view-details')) {
+            const button = e.target.closest('.btn-view-details');
+            const productId = button.getAttribute('data-product-id');
+            
+            localStorage.setItem('selectedProductId', productId);
+            window.location.href = 'product-info.html';
+            return; // Salir temprano
+        }
+        
+        // Para el botón de Comprar
+        if (e.target.closest('.btn-buy-now')) {
+            const button = e.target.closest('.btn-buy-now');
+            const productId = button.getAttribute('data-product-id');
+            
+            // Tu lógica de compra aquí
+            console.log('Comprar producto:', productId);
+            // addToCart(productId); // Ejemplo de función
+        }
+    });
 });
 //
 function createProductCard(product) {
@@ -69,28 +92,3 @@ function loadProducts() {
             `;
         });
 }
-//Delegación de eventos (más eficiente)
-document.addEventListener('DOMContentLoaded', function() {
-    // Delegación de eventos para ambos botones
-    document.addEventListener('click', function(e) {
-        // Para el botón de Detalles
-        if (e.target.closest('.btn-view-details')) {
-            const button = e.target.closest('.btn-view-details');
-            const productId = button.getAttribute('data-product-id');
-            
-            localStorage.setItem('selectedProductId', productId);
-            window.location.href = 'product-info.html';
-            return; // Salir temprano
-        }
-        
-        // Para el botón de Comprar
-        if (e.target.closest('.btn-buy-now')) {
-            const button = e.target.closest('.btn-buy-now');
-            const productId = button.getAttribute('data-product-id');
-            
-            // Tu lógica de compra aquí
-            console.log('Comprar producto:', productId);
-            // addToCart(productId); // Ejemplo de función
-        }
-    });
-});
