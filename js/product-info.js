@@ -1,16 +1,24 @@
 // Script para manejar la carga de productos desde la API e imágenes locales
 document.addEventListener('DOMContentLoaded', () => {
-    // Obtener el ID del producto de la URL
+    // Obtener el ID del producto de localStorage
     const productoId = obtenerIdProducto();
     
     // Cargar el producto desde la API
     cargarProductoDesdeAPI(productoId);
 });
 
-// Función para obtener el ID del producto de la URL
+// Función para obtener el ID del producto de localStorage
 function obtenerIdProducto() {
-    const urlParams = new URLSearchParams(window.location.search);
-    return urlParams.get('id') || '50921'; // Valor por defecto
+    const productoId = localStorage.getItem('selectedProductId');
+    
+    if (!productoId) {
+        console.error('No se encontró ID de producto en localStorage');
+        // Opcional: redirigir a products.html
+        // window.location.href = 'products.html';
+        return '50921'; // Valor por defecto
+    }
+    
+    return productoId;
 }
 
 // Función principal para cargar producto desde API
@@ -18,12 +26,21 @@ async function cargarProductoDesdeAPI(productoId) {
     try {
         mostrarCargando();
         
-        // Cargar datos de la API
-        const response = await fetch('https://japceibal.github.io/emercado-api/cats_products/101.json');
-        const data = await response.json();
+        // Buscar el producto en todas las categorías
+        const categorias = [101, 102, 103, 104, 105];
+        let product = null;
         
-        // Buscar el producto específico por ID
-        const product = data.products.find(p => p.id == productoId) || data.products[0];
+        for (const categoriaId of categorias) {
+            try {
+                const response = await fetch(`https://japceibal.github.io/emercado-api/cats_products/${categoriaId}.json`);
+                const data = await response.json();
+                
+                product = data.products.find(p => p.id == productoId);
+                if (product) break;
+            } catch (error) {
+                console.warn(`Error en categoría ${categoriaId}:`, error);
+            }
+        }
         
         if (!product) {
             throw new Error('Producto no encontrado');
