@@ -19,6 +19,27 @@ document.addEventListener('DOMContentLoaded', function () {
             showProducts(productsArray);
         });
     }
+
+    //Event listener para el botón de Detalles
+    document.addEventListener('click', function(e) {
+        // Para el botón de Detalles
+        if (e.target.closest('.btn-view-details')) {
+            const button = e.target.closest('.btn-view-details');
+            const productId = button.getAttribute('data-product-id');
+            
+            localStorage.setItem('selectedProductId', productId);
+            window.location.href = 'product-info.html';
+            return;
+        }
+        S
+        // Para el botón de Comprar (opcional)
+        if (e.target.closest('.btn-buy-now')) {
+            const button = e.target.closest('.btn-buy-now');
+            const productId = button.getAttribute('data-product-id');
+            console.log('Comprar producto:', productId);
+            // addToCart(productId);
+        }
+    });
 });
 
 // Ordenar tarjetas
@@ -174,4 +195,3 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-
