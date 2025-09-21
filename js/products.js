@@ -20,6 +20,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
+const buscador = document.getElementById('buscador');
+buscador.addEventListener('input', function() {
+    const articulos = document.querySelectorAll('.card-product');
+    const textoBusqueda = buscador.value.toLowerCase();
+
+    articulos.forEach(articulo => {
+        const titulo = articulo.querySelector(".card-body").querySelector('h5').textContent.toLowerCase();
+        const subtitulo = articulo.querySelector(".card-body").querySelector('h6').textContent.toLowerCase();
+        const descripcion = articulo.querySelector(".card-body").querySelector('p').textContent.toLowerCase();
+
+        if (titulo.includes(textoBusqueda) || subtitulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda)) {
+            articulo.style.display = "block";
+        } else {
+            articulo.style.display = "none";
+        }
+    });
+});
+
     //Event listener para el botón de Detalles
     document.addEventListener('click', function(e) {
         // Para el botón de Detalles
@@ -31,7 +49,7 @@ document.addEventListener('DOMContentLoaded', function () {
             window.location.href = 'product-info.html';
             return;
         }
-        S
+        
         // Para el botón de Comprar (opcional)
         if (e.target.closest('.btn-buy-now')) {
             const button = e.target.closest('.btn-buy-now');
