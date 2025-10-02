@@ -1,232 +1,276 @@
 <!DOCTYPE html>
 <html lang="es">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, shrink-to-fit=no"
+    />
+    <title>eMercado - Todo lo que busques está aquí</title>
+    <!--Link para los iconos desde Bootstrap-->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr"
+      crossorigin="anonymous"
+    />
+    <!---->
+    <link
+      href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i"
+      rel="stylesheet"
+    />
+    <link href="css/font-awesome.min.css" rel="stylesheet" />
+    <link href="css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/styles.css" rel="stylesheet" />
+    <link rel="stylesheet" href="product-info.css" />
+    <style>
+      /* Breadcrumb */
+      .breadcrumb {
+        font-size: 14px;
+        margin-bottom: 20px;
+        color: #6c757d;
+        padding-left: 20px;
+        margin: 0 auto;
+      }
 
-<head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
-  <!--Link para los iconos desde Bootstrap-->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet" >
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
-  <!---->
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
-  <link rel="stylesheet" href="product-info.css">
-  <style>
-  /* Breadcrumb */
-  .breadcrumb {
-      font-size: 14px;
-      margin-bottom: 20px;
-      color: #6c757d;
-      padding-left: 20px;
-      margin: 0 auto;
-  }
-    
-  .breadcrumb a {
-      color: #007bff;
-      text-decoration: none;
-    }
-    
-  .breadcrumb a:hover {
-      text-decoration: underline;
-    }
+      .breadcrumb a {
+        color: #007bff;
+        text-decoration: none;
+      }
 
-  .product-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    background: white;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    overflow: hidden;
-  }
-  
-  .gallery-container {
-    display: flex;
-    padding: 20px;
-    gap: 20px;
-  }
-  
-  .thumbnails-vertical {
-    width: 80px;
-    margin-right: 15px;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-  }
-  
-  .thumbnail {
-    width: 80px;
-    height: 80px;
-    border-radius: 4px;
-    border: 2px solid transparent;
-    cursor: pointer;
-    overflow: hidden;
-    transition: all 0.2s ease;
-  }
-  
-  .thumbnail:hover, .thumbnail.active {
-    border-color: #3483fa;
-    transform: scale(1.05);
-  }
-  
-  .thumbnail img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-  }
-  
-  .main-image {
-    flex: 1;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    height: 500px;
-    overflow: hidden;
-    min-height: 400px;
-    background-color: #f8f9fa;
-  }
-  
-  .main-image img {
-    max-width: 100%;
-    max-height: 100%;
-    object-fit: contain;
-  }
-  
-  .product-info {
-    padding: 20px;
-    border-top: 1px solid rgba(0,0,0,0.1);
-  }
-  
-  .product-title {
-    font-size: 2rem;
-    font-weight: 700;
-    color: #2c3e50;
-    margin-bottom: 0.5rem;
-  }
-  
-  .product-price {
-    font-size: 2.2rem;
-    font-weight: 700;
-    color: #198754;
-    margin: 1rem 0;
-  }
-  
-  .product-actions {
-    display: flex;
-    gap: 10px;
-    margin-bottom: 30px;
-  }
-  
-  .btn-primary {
-    background-color: #3483fa;
-    border-color: #3483fa;
-    flex: 1;
-    padding: 12px;
-    font-weight: 600;
-  }
-  
-  .btn-outline-primary {
-    color: #3483fa;
-    border-color: #3483fa;
-    flex: 1;
-    padding: 12px;
-    font-weight: 600;
-  }
-  
-  .loading {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 500px;
-    flex-direction: column;
-  }
-  
-  .spinner {
-    width: 3rem;
-    height: 3rem;
-    border: 5px solid #f3f3f3;
-    border-top: 5px solid #3498db;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin-bottom: 1rem;
-  }
-  
-  @keyframes spin {
-    0% { transform: rotate(0deg); }
-    100% { transform: rotate(360deg); }
-  }
+      .breadcrumb a:hover {
+        text-decoration: underline;
+      }
 
-  @media (max-width: 768px) {
-    .gallery-container {
-      flex-direction: column;
-    }
-    
-    .thumbnails-vertical {
-      flex-direction: row;
-      width: 100%;
-      order: 2;
-      margin-top: 15px;
-      margin-right: 0;
-      overflow-x: auto;
-      height: 80px;
-    }
-    
-    .main-image {
-      height: 300px;
-    }
-  }
-  </style>
-</head>
+      .product-container {
+        max-width: 1200px;
+        margin: 0 auto;
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+      }
 
-<body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-    <div class="container">
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item">
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+      .gallery-container {
+        display: flex;
+        padding: 20px;
+        gap: 20px;
+      }
 
-  <main>
-    <div class="breadcrumb">
-      <a href="#">Inicio</a> > <a href="#">Categorías</a> > <a href="#">Catálogo de Autos</a> > <span>Susuki Celerio</span>
-    </div>
+      .thumbnails-vertical {
+        width: 80px;
+        margin-right: 15px;
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
 
-    <div class="product-container">
-      <!-- Galería de imágenes -->
-      <div class="gallery-container">
-        <!-- Miniaturas verticales -->
-        <div class="thumbnails-vertical" id="thumbnailsContainer">
-          <!-- Las miniaturas se cargarán dinámicamente con JavaScript -->
+      .thumbnail {
+        width: 80px;
+        height: 80px;
+        border-radius: 4px;
+        border: 2px solid transparent;
+        cursor: pointer;
+        overflow: hidden;
+        transition: all 0.2s ease;
+      }
+
+      .thumbnail:hover,
+      .thumbnail.active {
+        border-color: #3483fa;
+        transform: scale(1.05);
+      }
+
+      .thumbnail img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .main-image {
+        flex: 1;
+        display: flex;
+        justify-content: center;
+        align-items: flex-start;
+        height: 500px;
+        overflow: hidden;
+        min-height: 400px;
+        background-color: #f8f9fa;
+      }
+
+      .main-image img {
+        max-width: 100%;
+        max-height: 100%;
+        object-fit: contain;
+      }
+
+      .product-info {
+        padding: 20px;
+        border-top: 1px solid rgba(0, 0, 0, 0.1);
+      }
+
+      .product-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #2c3e50;
+        margin-bottom: 0.5rem;
+      }
+
+      .product-price {
+        font-size: 2.2rem;
+        font-weight: 700;
+        color: #198754;
+        margin: 1rem 0;
+      }
+
+      .product-actions {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 30px;
+      }
+
+      .btn-primary {
+        background-color: #3483fa;
+        border-color: #3483fa;
+        flex: 1;
+        padding: 12px;
+        font-weight: 600;
+      }
+
+      .btn-outline-primary {
+        color: #3483fa;
+        border-color: #3483fa;
+        flex: 1;
+        padding: 12px;
+        font-weight: 600;
+      }
+
+      .loading {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 500px;
+        flex-direction: column;
+      }
+
+      .spinner {
+        width: 3rem;
+        height: 3rem;
+        border: 5px solid #f3f3f3;
+        border-top: 5px solid #3498db;
+        border-radius: 50%;
+        animation: spin 1s linear infinite;
+        margin-bottom: 1rem;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      @media (max-width: 768px) {
+        .gallery-container {
+          flex-direction: column;
+        }
+
+        .thumbnails-vertical {
+          flex-direction: row;
+          width: 100%;
+          order: 2;
+          margin-top: 15px;
+          margin-right: 0;
+          overflow-x: auto;
+          height: 80px;
+        }
+
+        .main-image {
+          height: 300px;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+      <div class="container">
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNav"
+          aria-controls="navbarNav"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+          <ul class="navbar-nav w-100 justify-content-between">
+            <li class="nav-item">
+              <a class="nav-link" href="index.html">Inicio</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="categories.html">Categorías</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="sell.html">Vender</a>
+            </li>
+            <li class="nav-item"></li>
+          </ul>
         </div>
-        <!-- Imagen principal -->
-        <div class="main-image">
+      </div>
+    </nav>
+
+    <main>
+      <div class="breadcrumb">
+        <a href="#">Inicio</a> > <a href="#">Categorías</a> >
+        <a href="#">Catálogo de Autos</a> > <span>Susuki Celerio</span>
+      </div>
+
+      <div class="product-container">
+        <!-- Galería de imágenes -->
+        <div class="gallery-container">
+          <!-- Miniaturas verticales -->
+          <div class="thumbnails-vertical" id="thumbnailsContainer">
+            <!-- Las miniaturas se cargarán dinámicamente con JavaScript -->
+          </div>
+          <!-- Imagen principal -->
+          <div class="main-image">
             <div class="loading" id="loadingIndicator">
-                <div class="spinner"></div>
-                <p>Cargando imágenes...</p>
+              <div class="spinner"></div>
+              <p>Cargando imágenes...</p>
             </div>
-            <img id="mainImage" style="display: none;" alt="Suzuki Celerio">
+            <img id="mainImage" style="display: none" alt="Suzuki Celerio" />
+          </div>
         </div>
-      </div>
 
+        <!-- Información del producto -->
+        <div class="product-info">
+          <h1 class="product-title" id="productTitle">Cargando...</h1>
+          <div class="product-price" id="productPrice">Cargando...</div>
+          <div class="product-sales" id="productSales">Cargando...</div>
+
+          <div class="product-actions">
+            <button class="btn btn-primary">
+              <i class="bi bi-cart-plus"></i> Agregar al carrito
+            </button>
+            <button class="btn btn-outline-primary">
+              <i class="bi bi-lightning"></i> Comprar ahora
+            </button>
+          </div>
+
+          <div class="mt-4">
+            <h5>Descripción</h5>
+            <p id="productDescription">Cargando descripción...</p>
+          </div>
       <!-- Información del producto -->
       <div class="product-info">
         <h1 class="product-title" id="productTitle">Cargando...</h1>
@@ -270,28 +314,35 @@
           <p id="productDescription">Cargando descripción...</p>
         </div>
       </div>
-    </div>
-  </main>
+      <div class="product-coments">
+        <p>Calificaciones del Producto</p>
+        <!-- Calificaciones agregadas con JavaScript-->
+      </div>
+    </main>
 
-  <footer class="text-muted">
-    <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
+    <footer class="text-muted">
+      <div class="container">
+        <p class="float-end">
+          <a href="#">Volver arriba</a>
+        </p>
+        <p>
+          Este sitio forma parte de
+          <a href="https://jovenesaprogramar.edu.uy/" target="_blank"
+            >Jovenes a Programar</a
+          >
+        </p>
+      </div>
+    </footer>
+    <div id="spinner-wrapper">
+      <div class="lds-ring">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+      </div>
     </div>
-  </footer>
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/product-info.js"></script>
-</body>
-
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/product-info.js"></script>
+  </body>
 </html>
