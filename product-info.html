@@ -243,6 +243,29 @@
         </div>
         
         <div class="mt-4">
+          <div class="mt-4">
+          <h5>Califica el Producto</h5>
+          <div id="ratingControls" class="d-flex align-items-center mb-3">
+            <span class="star-rating fs-3">
+              <i class="bi bi-star" data-value="1"></i>
+              <i class="bi bi-star" data-value="2"></i>
+              <i class="bi bi-star" data-value="3"></i>
+              <i class="bi bi-star" data-value="4"></i>
+              <i class="bi bi-star" data-value="5"></i>
+            </span>
+            <span class="ms-3 badge bg-secondary" id="selectedRatingText">0/5</span>
+          </div>
+
+          <form id="commentForm" class="mb-4">
+            <div class="mb-3">
+              <label for="commentTextarea" class="form-label">Tu Comentario</label>
+              <textarea class="form-control" id="commentTextarea" rows="3" placeholder="Escribe tu opinión sobre el producto..."></textarea>
+            </div>
+            <button type="submit" class="btn btn-success" id="submitCommentBtn">
+                <i class="bi bi-send"></i> Enviar Calificación
+            </button>
+          </form>
+        </div>
           <h5>Descripción</h5>
           <p id="productDescription">Cargando descripción...</p>
         </div>
