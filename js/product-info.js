@@ -224,3 +224,65 @@ function generarEstrellas(cantidad) {
     }
     return estrellasHtml;
 }
+document.addEventListener("DOMContentLoaded", function() {
+    const starContainer = document.querySelector(".star-rating");
+    const stars = starContainer.querySelectorAll("i");
+    const ratingText = document.getElementById("selectedRatingText");
+    let currentRating = 0; // Almacena la calificación actual seleccionada
+
+    // Función para actualizar el color de las estrellas
+    function updateStars(rating) {
+        stars.forEach(star => {
+            const starValue = parseInt(star.getAttribute("data-value"));
+            if (starValue <= rating) {
+                star.classList.add("rated");
+                star.classList.remove("bi-star");
+                star.classList.add("bi-star-fill"); // Usar estrella rellena
+            } else {
+                star.classList.remove("rated");
+                star.classList.add("bi-star");
+                star.classList.remove("bi-star-fill"); // Usar estrella vacía
+            }
+        });
+        ratingText.textContent = `${rating}/5`;
+    }
+
+    // Evento de click para fijar la calificación
+    stars.forEach(star => {
+        star.addEventListener("click", function() {
+            currentRating = parseInt(this.getAttribute("data-value"));
+            updateStars(currentRating);
+        });
+
+        // Evento hover (entrada) para previsualizar la calificación
+        star.addEventListener("mouseover", function() {
+            const hoverRating = parseInt(this.getAttribute("data-value"));
+            updateStars(hoverRating);
+        });
+
+        // Evento hover (salida) para volver a la calificación seleccionada
+        star.addEventListener("mouseout", function() {
+            updateStars(currentRating);
+        });
+    });
+
+    const commentForm = document.getElementById("commentForm");
+    commentForm.addEventListener("submit", function(e) {
+        e.preventDefault();
+        const comment = document.getElementById("commentTextarea").value;
+        
+        if (currentRating === 0) {
+            alert("Por favor, selecciona una calificación (1-5 estrellas).");
+            return;
+        }
+
+    
+        console.log(`Calificación enviada: ${currentRating} estrellas. Comentario: "${comment}"`);
+        alert(`¡Gracias! Calificación de ${currentRating} estrellas enviada.`);
+
+        // Resetear el formulario después del envío exitoso
+        document.getElementById("commentTextarea").value = "";
+        currentRating = 0;
+        updateStars(currentRating);
+    });
+});

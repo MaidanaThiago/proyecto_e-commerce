@@ -372,3 +372,20 @@ body {
     font-size: 1.5rem;
   }
 }
+
+/* Estilos para el control de calificación por estrellas */
+
+.star-rating i {
+    color: #ccc; 
+    cursor: pointer;
+    transition: color 0.2s ease, transform 0.1s ease;
+}
+
+/* Clase que se aplicará mediante JavaScript para las estrellas seleccionadas */
+.star-rating i.rated {
+    color: #ffc107; 
+}
+
+.star-rating i:hover {
+    transform: scale(1.1);
+}
