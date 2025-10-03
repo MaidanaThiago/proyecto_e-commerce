@@ -219,7 +219,7 @@ a.custom-card:hover {
 :root {
   --primary: #3b2620;
   --accent: #d39c6a;
-  --success: #27ae60;
+  --success: #bba96f;
   --background-main: #FFE9C8;
   --background-footer: #e1b988;
   --text-main: #976f4e;
@@ -388,4 +388,48 @@ body {
 
 .star-rating i:hover {
     transform: scale(1.1);
+}
+.product-coments {
+  display: flex;
+  flex-direction: column;
+  /* apila los comentarios */
+  align-items: center;
+  /* centra toda la sección horizontalmente */
+  max-width: 800px;
+  /* ancho máximo de la sección */
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.comment {
+  width: 100%;
+  /* ocupa todo el ancho del contenedor */
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  /* espacio entre comentarios */
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+}
+
+.comment-username {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.comment-description {
+  margin-bottom: 5px;
+}
+
+.comment-stars {
+  color: #ffc107;
+  margin-bottom: 5px;
+}
+
+.comment-date {
+  font-size: 0.85rem;
+  color: #6c757d;
 }

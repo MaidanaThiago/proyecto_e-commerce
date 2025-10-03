@@ -149,13 +149,13 @@ function cargarComentariosDesdeAPI(productoId) {
 function agregarComentarioAlDOM(user, comment, rating, date) {
     const productComentsContainer = document.querySelector(".product-coments");
     const nuevoComentario = document.createElement("div");
-    nuevoComentario.innerHTML = `
-        <div>
-            <div class="comment-username">${user}</div>
-            <div class="comment-description">${comment}</div>
-            <div class="comment-stars">${generarEstrellas(rating)}</div>
-            <div class="comment-date">${date}</div>
-        </div>`;
+nuevoComentario.classList.add("comment"); // clase para estilo
+nuevoComentario.innerHTML = `
+    <div class="comment-username">${user}</div>
+    <div class="comment-description">${comment}</div>
+    <div class="comment-stars">${generarEstrellas(rating)}</div>
+    <div class="comment-date">${date}</div>`;
+
     productComentsContainer.appendChild(nuevoComentario);
 }
 
