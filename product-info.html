@@ -276,36 +276,46 @@
           <p id="productDescription">Cargando descripción...</p>
         </div>
 
-        <div class="mt-4">
-          <h5>Califica el Producto</h5>
-          <div id="ratingControls" class="d-flex align-items-center mb-3">
-            <span class="star-rating fs-3">
-              <i class="bi bi-star" data-value="1"></i>
-              <i class="bi bi-star" data-value="2"></i>
-              <i class="bi bi-star" data-value="3"></i>
-              <i class="bi bi-star" data-value="4"></i>
-              <i class="bi bi-star" data-value="5"></i>
-            </span>
-            <span class="ms-3 badge bg-secondary" id="selectedRatingText">0/5</span>
+        <div class="container mt-4">
+          <!-- Producto -->
+          <h2 id="productTitle"></h2>
+          <p id="productPrice"></p>
+          <p id="productSales"></p>
+          <p id="productDescription"></p>
+        
+         
+          
+          <div id="thumbnailsContainer"></div>
+        
+          <!-- Comentarios -->
+          <div class="product-comments-container mt-5">
+            <h4>Comentarios del Producto</h4>
+        
+            <form id="commentForm" class="comment-form mb-4">
+              <textarea id="commentTextarea" placeholder="Escribe tu comentario..." required></textarea>
+        
+              <div class="star-rating mb-2">
+                <i class="bi bi-star" data-value="1"></i>
+                <i class="bi bi-star" data-value="2"></i>
+                <i class="bi bi-star" data-value="3"></i>
+                <i class="bi bi-star" data-value="4"></i>
+                <i class="bi bi-star" data-value="5"></i>
+                <span class="ms-2" id="selectedRatingText">0/5</span>
+              </div>
+        
+              <button type="submit" class="btn btn-success btn-comment">
+                <i class="bi bi-send"></i> Enviar
+              </button>
+            </form>
+        
+            <div id="commentsList"></div>
           </div>
-
-          <form id="commentForm" class="mb-4">
-            <div class="mb-3">
-              <label for="commentTextarea" class="form-label">Tu Comentario</label>
-              <textarea class="form-control" id="commentTextarea" rows="3"
-                placeholder="Escribe tu opinión sobre el producto..."></textarea>
-            </div>
-            <button type="submit" class="btn btn-success" id="submitCommentBtn">
-              <i class="bi bi-send"></i> Enviar Calificación
-            </button>
-          </form>
         </div>
+
       </div>
 
       <div class="product-coments mt-4">
-        <p>Calificaciones del Producto</p>
-        <!-- Calificaciones agregadas con JavaScript-->
-      </div>
+        
     </div>
   </main>
 

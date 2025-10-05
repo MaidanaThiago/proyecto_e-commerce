@@ -389,47 +389,67 @@ body {
 .star-rating i:hover {
     transform: scale(1.1);
 }
-.product-coments {
-  display: flex;
-  flex-direction: column;
-  /* apila los comentarios */
-  align-items: center;
-  /* centra toda la sección horizontalmente */
-  max-width: 800px;
-  /* ancho máximo de la sección */
-  margin: 0 auto;
+.product-comments-container {
+  background: #fff;
   padding: 20px;
-  background-color: #fff;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  border-radius: 12px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+  margin-top: 30px;
 }
 
-.comment {
+.comment-form textarea {
   width: 100%;
-  /* ocupa todo el ancho del contenedor */
-  background-color: #f8f9fa;
+  padding: 12px;
   border-radius: 8px;
-  padding: 10px 15px;
+  border: 1px solid #ddd;
+  resize: vertical;
+  margin-bottom: 10px;
+  font-size: 1rem;
+}
+
+.btn-comment {
+  background: #3483fa;
+  border: none;
+  color: #fff;
+  padding: 10px 16px;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+#commentsList .comment-card {
+  background: #f9f9f9;
+  border-radius: 10px;
+  padding: 15px;
   margin-bottom: 15px;
-  /* espacio entre comentarios */
-  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
 }
 
-.comment-username {
-  font-weight: bold;
-  margin-bottom: 5px;
+.comment-card .comment-username {
+  font-weight: 700;
+  color: #2c3e50;
 }
 
-.comment-description {
-  margin-bottom: 5px;
-}
-
-.comment-stars {
-  color: #ffc107;
-  margin-bottom: 5px;
-}
-
-.comment-date {
+.comment-card .comment-date {
   font-size: 0.85rem;
-  color: #6c757d;
+  color: #7f8c8d;
+}
+
+.comment-card .comment-stars i {
+  color: #ffc107;
+  margin-right: 2px;
+}
+
+/* Estrellas para el formulario */
+.star-rating i {
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s, transform 0.1s;
+}
+
+.star-rating i.rated {
+  color: #ffc107;
+}
+
+.star-rating i:hover {
+  transform: scale(1.1);
 }

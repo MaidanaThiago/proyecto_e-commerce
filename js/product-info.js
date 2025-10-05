@@ -3,6 +3,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     cargarProductoDesdeAPI(productoId);
     cargarComentariosDesdeAPI(productoId);
+    inicializarFormularioComentarios();
 });
 
 function obtenerIdProducto() {
@@ -11,6 +12,7 @@ function obtenerIdProducto() {
     return productoId;
 }
 
+// --------- Producto ---------
 async function cargarProductoDesdeAPI(productoId) {
     try {
         mostrarCargando();
@@ -122,19 +124,15 @@ function mostrarError(mensaje) {
     loadingElement.innerHTML = `<p class="text-danger">${mensaje}</p>`;
 }
 
-// Comentarios desde API
+// --------- Comentarios ---------
 function cargarComentariosDesdeAPI(productoId) {
-    const productComentsContainer = document.querySelector(".product-coments");
-    productComentsContainer.innerHTML = `<p>Calificaciones del Producto</p>`;
-
-    // Traer comentarios guardados en localStorage
     const comentariosGuardados = JSON.parse(localStorage.getItem(`comments_${productoId}`)) || [];
 
     comentariosGuardados.forEach(comentario => {
         agregarComentarioAlDOM(comentario.user, comentario.comment, comentario.rating, comentario.date);
     });
 
-    // Traer comentarios de la API también
+    // También cargar los de la API
     const url = `https://japceibal.github.io/emercado-api/products_comments/${productoId}.json`;
     fetch(url)
         .then(res => res.json())
@@ -147,16 +145,16 @@ function cargarComentariosDesdeAPI(productoId) {
 }
 
 function agregarComentarioAlDOM(user, comment, rating, date) {
-    const productComentsContainer = document.querySelector(".product-coments");
+    const commentsList = document.getElementById("commentsList");
     const nuevoComentario = document.createElement("div");
-nuevoComentario.classList.add("comment"); // clase para estilo
-nuevoComentario.innerHTML = `
-    <div class="comment-username">${user}</div>
-    <div class="comment-description">${comment}</div>
-    <div class="comment-stars">${generarEstrellas(rating)}</div>
-    <div class="comment-date">${date}</div>`;
-
-    productComentsContainer.appendChild(nuevoComentario);
+    nuevoComentario.className = "comment-card";
+    nuevoComentario.innerHTML = `
+        <div class="comment-username">${user}</div>
+        <div class="comment-stars">${generarEstrellas(rating)}</div>
+        <div class="comment-description">${comment}</div>
+        <div class="comment-date">${date}</div>
+    `;
+    commentsList.prepend(nuevoComentario);
 }
 
 function generarEstrellas(cantidad) {
@@ -167,8 +165,8 @@ function generarEstrellas(cantidad) {
     return estrellasHtml;
 }
 
-// Rating y envío de comentario
-document.addEventListener("DOMContentLoaded", function() {
+// --------- Formulario de comentario ---------
+function inicializarFormularioComentarios() {
     const starContainer = document.querySelector(".star-rating");
     const stars = starContainer.querySelectorAll("i");
     const ratingText = document.getElementById("selectedRatingText");
@@ -226,10 +224,8 @@ document.addEventListener("DOMContentLoaded", function() {
         });
         localStorage.setItem(`comments_${productoId}`, JSON.stringify(comentariosGuardados));
 
-        alert(`¡Gracias! Calificación de ${currentRating} estrellas enviada.`);
-
         document.getElementById("commentTextarea").value = "";
         currentRating = 0;
         updateStars(currentRating);
     });
-});
+}
