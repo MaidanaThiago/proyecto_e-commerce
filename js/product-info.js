@@ -233,3 +233,118 @@ document.addEventListener("DOMContentLoaded", function() {
         updateStars(currentRating);
     });
 });
+
+// Sección de productos relacionados
+
+let productsArray = [];
+
+// Redirección a login.html si no hay sesión iniciada
+document.addEventListener('DOMContentLoaded', function () {
+    const usuario = sessionStorage.getItem('usuario');
+    if (!usuario) {
+        window.location.href = 'login.html';
+        return;
+    }
+    loadProducts();
+
+
+    //Event listener para el botón de Detalles
+    document.addEventListener('click', function(e) {
+        // Para el botón de Detalles
+        if (e.target.closest('.btn-view-details')) {
+            const button = e.target.closest('.btn-view-details');
+            const productId = button.getAttribute('data-product-id');
+            
+            localStorage.setItem('selectedProductId', productId);
+            window.location.href = 'product-info.html';
+            return;
+        }
+    });
+});
+
+function createProductCard(product) {
+    const nameParts = product.name.split(' ');
+    const title = nameParts[0];
+    const subtitle = nameParts.slice(1).join(' ');
+            
+    return `
+        <div class="col">
+            <div class="card-product">
+                <div class="card-img-container">
+                    <img src="${product.image || 'img/placeholder.jpg'}" class="card-img-top" alt="${product.name}">
+                </div>
+                <div class="card-body">
+                    <h5 class="card-title">${product.name}</h5>
+                    <div class="price-container">
+                        <div class="price">${product.currency} ${product.cost}</div>
+                    </div>
+                    <div class="btn-container">
+                        <button class="btn btn-details btn-view-details" data-product-id="${product.id}">
+                            <i class="bi bi-info-circle icon"></i>Detalles
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    `;
+}
+
+function showProducts(products) {
+    const productsContainer = document.getElementById('productsContainer');
+    productsContainer.innerHTML = `
+        <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+            ${products.map(createProductCard).join('')}
+        </div>
+    `;
+}
+
+// Función principal para cargar y mostrar productos
+function loadProducts() {
+    let catId = localStorage.getItem('catID')
+    fetch(`https://japceibal.github.io/emercado-api/cats_products/${catId}.json`)
+        .then(response => {
+            if (!response.ok) throw new Error('Error en la respuesta');
+            return response.json();
+        })
+        .then(data => {
+            productsArray = data.products; // Guardar productos en variable global
+            productsArray = productsArray.filter(elemento => elemento.id != obtenerIdProducto()); // Quita del Array el elemento actual de la página de product-info para que no lo muestre en "Productos Relacionados"
+            showProducts(productsArray); // Muestra el array de "Productos Relacionados"
+        })
+        .catch(error => {
+            console.error('Error cargando productos:', error);
+            document.getElementById('productsContainer').innerHTML = `
+                <div class="col-12 text-center">
+                    <p class="text-danger">Error al cargar los productos: ${error.message}</p>
+                </div>
+            `;
+        });
+}
+
+// Cuando el documento se carga
+document.addEventListener("DOMContentLoaded", function () {
+    // Obtiene el ID de la categoría del almacenamiento local
+    const catID = localStorage.getItem("catID");
+
+    if (!catID) {
+        // Si no hay categoría seleccionada, muestra un mensaje de error
+        document.getElementById("cat-list-container").innerHTML =
+            `<h4 class="text-danger">No se encontró ninguna categoría seleccionada.</h4>`;
+        return;
+    }
+
+    // Construye la URL usando el ID dinámico
+    const URL_COMPLETA = PRODUCTS_URL + catID + EXT_TYPE;
+
+    // Hace la solicitud y carga los productos
+    getJSONData(URL_COMPLETA).then(function (resultObj) {
+        if (resultObj.status === "ok") {
+            productsArray = resultObj.data.products;
+            showProductsList(productsArray);
+        } else {
+            document.getElementById("cat-list-container").innerHTML =
+                `<h4 class="text-danger">Error al cargar los productos.</h4>`;
+        }
+    });
+
+});

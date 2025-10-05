@@ -15,27 +15,26 @@ document.addEventListener('DOMContentLoaded', function () {
         filterBtn.addEventListener('click', function () {
             const min = parseFloat(document.getElementById('filterPriceMin').value) || 0;
             const max = parseFloat(document.getElementById('filterPriceMax').value) || Infinity;
-            productsArray = productsArray.filter(product => product.cost >= min && product.cost <= max);
-            showProducts(productsArray);
+            arrayFiltrado = productsArray.filter(product => product.cost >= min && product.cost <= max);
+            showProducts(arrayFiltrado);
         });
     }
 
 const buscador = document.getElementById('buscador');
 buscador.addEventListener('input', function() {
-    const articulos = document.querySelectorAll('.card-product');
     const textoBusqueda = buscador.value.toLowerCase();
+    const arrayFiltrado = [];
 
-    articulos.forEach(articulo => {
-        const titulo = articulo.querySelector(".card-body").querySelector('h5').textContent.toLowerCase();
-        const subtitulo = articulo.querySelector(".card-body").querySelector('h6').textContent.toLowerCase();
-        const descripcion = articulo.querySelector(".card-body").querySelector('p').textContent.toLowerCase();
+    productsArray.forEach(articulo => {
+        const titulo = articulo.name.toLowerCase();
+        const descripcion = articulo.description.toLowerCase();
 
-        if (titulo.includes(textoBusqueda) || subtitulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda)) {
-            articulo.style.display = "block";
-        } else {
-            articulo.style.display = "none";
+        if (titulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda)) {
+            arrayFiltrado.push(articulo);
         }
     });
+
+    showProducts(arrayFiltrado);
 });
 
     //Event listener para el botón de Detalles
@@ -140,6 +139,7 @@ function loadProducts() {
         })
         .then(data => {
             productsArray = data.products; // Guardar productos en variable global
+            console.log(productsArray);
             showProducts(productsArray);   // Mostrar todos al inicio
         })
         .catch(error => {
