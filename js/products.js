@@ -139,7 +139,6 @@ function loadProducts() {
         })
         .then(data => {
             productsArray = data.products; // Guardar productos en variable global
-            console.log(productsArray);
             showProducts(productsArray);   // Mostrar todos al inicio
         })
         .catch(error => {
