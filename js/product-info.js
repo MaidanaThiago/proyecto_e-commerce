@@ -57,7 +57,10 @@ function cargarImagenesProducto(product) {
         const img = document.createElement('img');
         img.src = imagen.miniatura;
         img.alt = imagen.alt;
-        img.onerror = () => img.src = 'https://via.placeholder.com/70x70/cccccc/999999?text=Error';
+        /*img.onerror = () => img.src = 'https://via.placeholder.com/70x70/cccccc/999999?text=Error';    ---> NOS DABA ERORR */
+        img.onerror = () => {
+            thumbnail.remove(); // elimina la miniatura si la imagen no existe
+        }
 
         thumbnail.appendChild(img);
         thumbnailsContainer.appendChild(thumbnail);
