@@ -1,208 +1,317 @@
-
-
+/* Estilos generales para el contenedor principal */
 .container {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 400px;
-  
-}
-
-
-/* Responsive para celulares */
-@media (max-width: 400px) {
-  .container {
-    flex-direction: column;
-    gap: 5px;
-  }
-  .logo-box {
-    padding: 5px !important;
-    margin-bottom: 2%;
-    margin-right: 70%;
-    border-radius: 20% !important;
-    
-  }
-  .logo-box img {
-    width: 60px !important;
-    height: 60px !important;
-  }
-  .registro {
-    border-radius: 8%!important;
-    width: auto !important;
-    max-width: 80%;
-    height: auto !important;
-    min-height: 80%;
-  }
-  .registro h2 {
-    font-weight: bold;
-    font-size: 1.8rem;
-    margin-bottom: 18px;
-  }
-  .input-group label {
-    font-size: 18px;
-  }
-  .input-group input {
-    padding: 8px;
-    font-size: 18px;
-  }
-  .btn {
-    padding: 10px;
-    font-size: 18px;
-  }
-  #fotoUsuario, #fotoPassword {
-    width: 18px;
-    height: 18px;
-  }
-  footer {
-    display: flex !important;
-    font-size: 13px;
-    padding: 2px !important;
-  }
-}
-
-    .logo-box {
-      background: white;
-      border-radius: 20px;
-      padding: 40px;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .logo-box img {
-      width: 350px;
-      height: 350px;
-    }
-
-    .registro {
-      background: white;
-      width: 410px;
-      height: 510px;
-      border-radius: 10px;
-      padding: 40px;
-    }
-
-    .registro h2 {
-      text-align: center;
-      margin-bottom: 30px;
-    }
-
-    .input-group {
-      margin-bottom: 20px;
-    }
-
-    .input-group label {
-      display: block;
-      font-size: 14px;
-      margin-bottom: 5px;
-    }
-
-    .input-group input {
-      width: 100%;
-      padding: 10px;
-      border: 1px solid #ccc;
-      border-radius: 5px;
-      
-    }
-
-    .btn {
-      width: 100%;
-      padding: 12px;
-      background-color: #d39c6a;
-      border: none;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: bold;
-    }
-
-    .btn:hover {
-      background-color: #c1844e;
-    }
-
-    footer {
-      background: #e1b988;
-      text-align: center;
-      padding: 17px;
-      font-size: 16px;
-      width: 100%;
-      
-    }
-
-    footer a {
-      justify-content: center;
-      text-align: center;
-      color: #3b2620;
-      font-weight: bold;
-      text-decoration: none;
-    }
-p{
-  
-    color: #976f4e;
-      font-weight: bold;
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-
-    #fotoUsuario {
-      width: 25px;
-      height: 25px;
-      float: inline-start;
-    }
-
-    #fotoPassword {
-      width: 25px;
-      height: 25px;
-      float: inline-start;
-    }
-
-/*Responsive para tablet*/
-
- @media screen and (max-width: 768px) {
-  body {
-    display: flex;
-    flex-direction: column;
-    min-height: 100vh; 
-    margin: 0;
-  }
-
-  main {
-    flex: 1; /*empuja el footer hacia abajo*/
+    flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
-  }
+    gap: 400px; /* Espacio entre el logo y el formulario en escritorio */
+}
 
-  .registro {
+/* Estilos de la caja del logo (Escritorio) */
+.logo-box {
     background: white;
-    width: 300px;
-    border-radius: 10px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-    padding: 20px;
-  }
-
-  .logo-box {
-    padding: 10px 10px;
-    display: inline-block;
-    position: absolute;  
-    top: 20px;
-    left: 20px;
     border-radius: 20px;
-  }
+    padding: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 
-  .logo-box img {
-    height: 100px;
-    width: 100px;
-  }
+.logo-box img {
+    width: 350px;
+    height: 350px;
+}
 
-  footer {
+/* Estilos de la caja del formulario de registro/login (Escritorio) */
+.registro {
+    background: white;
+    width: 410px;
+    height: 510px;
+    border-radius: 10px;
+    padding: 40px;
+}
+
+.registro h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.input-group {
+    margin-bottom: 20px;
+}
+
+.input-group label {
+    display: block;
+    font-size: 14px;
+    margin-bottom: 5px;
+}
+
+.input-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #d39c6a;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.btn:hover {
+    background-color: #c1844e;
+}
+
+/* Estilos del Footer */
+footer {
     background: #e1b988;
     text-align: center;
-    padding: 12px;   
-    font-size: 14px;
+    padding: 17px;
+    font-size: 16px;
     width: 100%;
-  }
+}
+
+footer p {
+    color: #976f4e;
+    font-weight: bold;
+    text-decoration: none;
+    /* Se unificó el estilo de p con el footer */
+}
+
+footer a {
+    justify-content: center;
+    text-align: center;
+    color: #3b2620;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+footer a:hover {
+    text-decoration: underline;
+}
+
+#fotoUsuario, #fotoPassword {
+    width: 25px;
+    height: 25px;
+    float: inline-start;
+}
+
+/* ------------------------------------------- */
+/* --- Responsive para dispositivos móviles --- */
+/* ------------------------------------------- */
+
+/* Responsive para celulares (max-width: 400px) */
+@media (max-width: 400px) {
+    .container {
+        flex-direction: column;
+        gap: 5px;
+    }
+    .logo-box {
+        padding: 5px !important;
+        margin-bottom: 2%;
+        margin-right: 70%;
+        border-radius: 20% !important;
+    }
+    .logo-box img {
+        width: 60px !important;
+        height: 60px !important;
+    }
+    .registro {
+        border-radius: 8% !important;
+        width: auto !important;
+        max-width: 80%;
+        height: auto !important;
+        min-height: 80%;
+    }
+    .registro h2 {
+        font-weight: bold;
+        font-size: 1.8rem;
+        margin-bottom: 18px;
+    }
+    .input-group label {
+        font-size: 18px;
+    }
+    .input-group input {
+        padding: 8px;
+        font-size: 18px;
+    }
+    .btn {
+        padding: 10px;
+        font-size: 18px;
+    }
+    #fotoUsuario, #fotoPassword {
+        width: 18px;
+        height: 18px;
+    }
+    footer {
+        display: flex !important;
+        font-size: 13px;
+        padding: 2px !important;
+    }
+}
+
+/* Responsive para tablet (max-width: 768px) */
+@media screen and (max-width: 768px) {
+    body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        margin: 0;
+    }
+
+    main {
+        flex: 1; /* empuja el footer hacia abajo */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    
+    .registro { /* Estilos específicos de registro para tablet */
+        background: white;
+        width: 300px;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        padding: 20px;
+    }
+
+    .logo-box {
+        padding: 10px 10px;
+        display: inline-block;
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        border-radius: 20px;
+    }
+
+    .logo-box img {
+        height: 100px;
+        width: 100px;
+    }
+
+    footer {
+        background: #e1b988;
+        text-align: center;
+        padding: 12px;
+        font-size: 14px;
+        width: 100%;
+    }
+}
+
+/* ------------------------------------------- */
+/* --- Estilos para el switch de modo oscuro --- */
+/* ------------------------------------------- */
+.dark-mode-toggle {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+    z-index: 100;
+}
+
+#darkModeSwitch {
+    position: absolute;
+    opacity: 0;
+}
+
+.dark-mode-toggle label {
+    width: 45px;
+    height: 25px;
+    background: #ccc;
+    position: relative;
+    display: block;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: 0.3s;
+    border: 1px solid white;
+}
+
+.dark-mode-toggle label:after {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: 3px;
+    width: 19px;
+    height: 19px;
+    background: white;
+    border-radius: 50%;
+    transition: 0.3s;
+}
+
+#darkModeSwitch:checked + label {
+    background: #2563EB;
+    border: 1px solid white;
+}
+
+#darkModeSwitch:checked + label:after {
+    left: calc(100% - 3px);
+    transform: translateX(-100%);
+}
+
+/* ------------------------------------------- */
+/* --- Estilos de Modo Oscuro Aplicados --- */
+/* ------------------------------------------- */
+
+/* Cuerpo y fondo (Fondo de pantalla oscuro) */
+.dark-mode {
+    background-color: #121A26 !important;
+}
+
+/* Caja del Logo: */
+.dark-logo-box {
+    background: #BADCE7 !important; /* Celeste claro */
+    padding: 30px !important;
+}
+
+/* Caja de Inicio de Sesión*/
+.dark-registro {
+    background: #464F59 !important; /* Gris oscuro */
+    width: 350px !important;
+    height: 400px !important;
+    padding: 30px !important;
+    border-radius: 10px;
+}
+
+.dark-registro h2 {
+    color: white !important;
+    font-size: 1.5rem !important;
+    margin-bottom: 20px !important;
+}
+
+.dark-registro .input-group label {
+    color: white !important;
+}
+
+.dark-registro .input-group input {
+    background: #737B85 !important;
+    color: white !important;
+    border: 1px solid #737B85 !important;
+}
+
+.dark-registro .btn {
+    background-color: #2F4050 !important;
+    color: white !important;
+    font-weight: normal !important;
+    padding: 10px !important;
+    margin-top: 10px;
+}
+
+.dark-registro .btn:hover {
+    background-color: #374757 !important;
+}
+ 
+.dark-footer {
+    background: #212529 !important; /* Negro/Gris muy oscuro */
+    padding: 15px !important;
+}
+
+.dark-footer p {
+    color: #CED4DA !important; /* Texto claro */
+}
+
+.dark-footer a {
+    color: #0087F0 !important; /* Azul para el enlace */
 }

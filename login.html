@@ -2,62 +2,73 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
-  
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/login.css" rel="stylesheet">
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    body {
-      background-color: #FFE9C8;
-      display: flex;
-      flex-direction: column;
-      min-height: 100vh;
-    }
-    footer {
-      margin-top: auto;
-    }
-  </style>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Todo lo que busques está aquí</title>
+
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/login.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLMDJ8g35p1F6T/tE3S8J7F/9Q0I/99q/Hj/Q9Y6FhNfF5F9E+6x3C3G3E1A6YQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            background-color: #FFE9C8;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        footer {
+            margin-top: auto;
+        }
+    </style>
 </head>
 
 <body>
-  <main class="mt-5">
-    <div class="container">
-    
-    <div class="logo-box">
-      <img src="img/Logo Jap.webp" alt="Logo" id="Logo">
-    </div>
+    <main class="mt-5">
+        <div class="container">
 
-    <!-- Caja login -->
-    <div class="registro">
-      <h2>Iniciar sesión</h2>
-      <form>
-        <div class="input-group">
-          <label for="username"><img src="img\icono_usuario_login.jpg" alt="Icono usuario de inicio de sesión" id="fotoUsuario">Usuario</label>
-          <input type="text" id="username" placeholder="Username" required>
+            <div class="dark-mode-toggle">
+                <input type="checkbox" id="darkModeSwitch">
+                <label for="darkModeSwitch"></label>
+            </div>
+
+            <div class="logo-box">
+                <img src="img/Logo Jap.webp" alt="Logo" id="Logo">
+            </div>
+
+            <div class="registro">
+                <h2>Iniciar sesión</h2>
+                <form>
+                    <div class="input-group">
+                        <label for="username"><img src="img\icono_usuario_login.jpg" alt="Icono usuario de inicio de sesión" id="fotoUsuario">Usuario</label>
+                        <input type="text" id="username" placeholder="Username" required>
+                    </div>
+
+                    <div class="input-group">
+                        <label for="password"><img src="img\icono_password_login.jpg" alt="Icono contraseña de inicio de sesión" id="fotoPassword">Contraseña</label>
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+
+                    <button type="submit" class="btn">Login</button>
+                </form>
+            </div>
         </div>
 
-        <div class="input-group">
-          <label for="password"><img src="img\icono_password_login.jpg" alt="Icono contraseña de inicio de sesión" id="fotoPassword">Contraseña</label>
-          <input type="password" id="password" placeholder="Password" required>
+    </main>
+
+    <footer class="text-muted">
+        <div class="container">
+            <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
         </div>
+    </footer>
+    <script src="js/login.js"></script>
+</body>
 
-  <button type="submit" class="btn">Login</button>
-      </form>
-    </div>
-  </div>
-
-  </main>
-  <footer class="text-muted">
-    <div class="container">
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
-    </div>
-  </footer>
-  <script src="js/login.js"></script>
+</html>
