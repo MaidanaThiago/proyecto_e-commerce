@@ -1,3 +1,5 @@
+let producto;
+
 document.addEventListener('DOMContentLoaded', () => {
     const productoId = obtenerIdProducto();
 
@@ -28,6 +30,7 @@ async function cargarProductoDesdeAPI(productoId) {
 
         if (!product) throw new Error('Producto no encontrado');
 
+        producto = product
         actualizarUIProducto(product);
         cargarImagenesProducto(product);
         ocultarCargando();
@@ -192,20 +195,20 @@ function inicializarFormularioComentarios() {
     }
 
     stars.forEach(star => {
-        star.addEventListener("click", function() {
+        star.addEventListener("click", function () {
             currentRating = parseInt(this.getAttribute("data-value"));
             updateStars(currentRating);
         });
-        star.addEventListener("mouseover", function() {
+        star.addEventListener("mouseover", function () {
             updateStars(parseInt(this.getAttribute("data-value")));
         });
-        star.addEventListener("mouseout", function() {
+        star.addEventListener("mouseout", function () {
             updateStars(currentRating);
         });
     });
 
     const commentForm = document.getElementById("commentForm");
-    commentForm.addEventListener("submit", function(e) {
+    commentForm.addEventListener("submit", function (e) {
         e.preventDefault();
         const comment = document.getElementById("commentTextarea").value;
         if (currentRating === 0 || comment.trim() === "") {
@@ -249,12 +252,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
 
     //Event listener para el botón de Detalles
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         // Para el botón de Detalles
         if (e.target.closest('.btn-view-details')) {
             const button = e.target.closest('.btn-view-details');
             const productId = button.getAttribute('data-product-id');
-            
+
             localStorage.setItem('selectedProductId', productId);
             window.location.href = 'product-info.html';
             return;
@@ -266,7 +269,7 @@ function createProductCard(product) {
     const nameParts = product.name.split(' ');
     const title = nameParts[0];
     const subtitle = nameParts.slice(1).join(' ');
-            
+
     return `
         <div class="col">
             <div class="card-product">
@@ -347,4 +350,19 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+});
+
+// Funcionalidad boton "Comprar"
+
+const buyButton = document.getElementById("buy");
+buyButton.addEventListener("click", () => {
+
+    localStorage.setItem("nombreProducto", producto.name);
+    localStorage.setItem("costoProducto", producto.cost);
+    localStorage.setItem("monedaProducto", producto.currency);
+    localStorage.setItem("cantidadProducto", 1);
+    localStorage.setItem('imagenProducto', producto.image);
+    localStorage.setItem("subtotalProducto", producto.cost);
+
+    window.location.href = './cart.html';
 });
