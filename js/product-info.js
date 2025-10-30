@@ -354,15 +354,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
 // Funcionalidad boton "Comprar"
 
+function getCart() {
+
+    let stringEnCarrito = localStorage.getItem("carrito");
+    let enCarrito;
+
+    stringEnCarrito ? enCarrito = JSON.parse(stringEnCarrito) : enCarrito = [];
+
+    return enCarrito;
+}
+
+function addToCart() {
+    let enCarrito = getCart();
+    let productoActual = {
+        "id": producto.id,
+        "nombre": producto.name,
+        "costo": producto.cost,
+        "moneda": producto.currency,
+        "cantidad": 1,
+        "imagen": producto.image,
+        "subtotal": producto.cost,
+    }
+
+    let iProducto = enCarrito.findIndex(prod => prod.id == productoActual.id);
+    if (iProducto != -1) {
+        enCarrito[iProducto].cantidad++;
+        enCarrito[iProducto].subtotal =
+            enCarrito[iProducto].cantidad *
+            enCarrito[iProducto].costo;
+    } else {
+        enCarrito.push(productoActual);
+    }
+    localStorage.setItem("carrito", JSON.stringify(enCarrito));
+    console.log(enCarrito);
+}
+
 const buyButton = document.getElementById("buy");
 buyButton.addEventListener("click", () => {
-
-    localStorage.setItem("nombreProducto", producto.name);
-    localStorage.setItem("costoProducto", producto.cost);
-    localStorage.setItem("monedaProducto", producto.currency);
-    localStorage.setItem("cantidadProducto", 1);
-    localStorage.setItem('imagenProducto', producto.image);
-    localStorage.setItem("subtotalProducto", producto.cost);
-
+    addToCart();
     window.location.href = './cart.html';
 });
+
+const addToCartButton = document.getElementById("add-to-cart");
+addToCartButton.addEventListener("click", () => {
+    addToCart();
+});
+
