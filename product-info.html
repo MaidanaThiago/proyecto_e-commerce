@@ -14,7 +14,49 @@
   <link href="css/bootstrap.min.css" rel="stylesheet" />
   <link href="css/styles.css" rel="stylesheet" />
   <link rel="stylesheet" href="product-info.css" />
+  
+  <!-- Variables de tema -->
   <style>
+    :root,
+    [data-theme="light"] {
+      --color-bg-body: #f8f9fa;
+      --color-bg-main: #f8f9fa;
+      --color-primary: #E9D3B2;
+      --color-secondary: #343a40;
+      --color-accent: #c94632;
+      --color-text-dark: #212529;
+      --color-text-light: white;
+      --color-card-bg: white;
+      --color-text-title: #212529;
+      --color-cart-text: #212529;
+      --color-box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    }
+  
+    [data-theme="dark"] {
+      --color-bg-body: #192435;
+      --color-bg-main: #192435;
+      --color-primary: #212a38;
+      --color-secondary: #303741;
+      --color-accent: #c94632;
+      --color-text-dark: #f0f0f0;
+      --color-text-light: #f0f0f0;
+      --color-card-bg: #2a3341;
+      --color-text-title: #ffffff;
+      --color-cart-text: #ffffff;
+      --color-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    body {
+        background-color: var(--color-bg-body);
+        font-family: 'Raleway', sans-serif;
+        transition: background-color 0.3s, color 0.3s;
+    }
+
+    .product-container {
+        background-color: var(--color-card-bg);
+        color: var(--color-text-dark);
+    }
+
     /* Breadcrumb */
     .breadcrumb {
       font-size: 14px;
@@ -36,7 +78,7 @@
     .product-container {
       max-width: 1200px;
       margin: 0 auto;
-      background: white;
+      background: #9b7f5f;
       border-radius: 8px;
       box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
       overflow: hidden;
@@ -86,7 +128,7 @@
       height: 500px;
       overflow: hidden;
       min-height: 400px;
-      background-color: #f8f9fa;
+      background-color: #9b7f5f;
     }
 
     .main-image img {
@@ -147,7 +189,7 @@
     .spinner {
       width: 3rem;
       height: 3rem;
-      border: 5px solid #f3f3f3;
+      border: 5px solid #ccaa84;
       border-top: 5px solid #3498db;
       border-radius: 50%;
       animation: spin 1s linear infinite;
@@ -219,30 +261,71 @@
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
+  <!-- NAVBAR -->
+  <nav class="navbar navbar-expand-lg p-2" style="background-color: var(--color-primary);">
     <div class="container">
+      <a class="navbar-brand d-flex align-items-center me-auto" href="index.html" style="color: var(--color-text-dark);">
+        <img src="img/Logo Jap.webp" alt="Logo" height="30" class="me-2">
+        <span class="fw-bold">Jóvenes a Programar</span>
+      </a>
+  
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
         aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
       </button>
       <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
+        <ul class="navbar-nav mx-auto">
+          <li class="nav-item me-4">
             <a class="nav-link" href="index.html">Inicio</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-4">
             <a class="nav-link" href="categories.html">Categorías</a>
           </li>
-          <li class="nav-item">
+          <li class="nav-item me-4">
             <a class="nav-link" href="sell.html">Vender</a>
           </li>
-          <li class="nav-item"></li>
         </ul>
-      </div>
-      <!-- Toggle Dark Mode -->
-      <div class="dark-mode-toggle ms-3">
-        <input type="checkbox" id="darkModeSwitch">
-        <label for="darkModeSwitch"></label>
+  
+        <ul class="navbar-nav d-flex align-items-center">
+          <!-- NUEVO INTERRUPTOR DE MODO -->
+          <li class="nav-item me-3">
+            <div class="theme-switch-wrapper d-flex align-items-center" title="Cambiar Modo de Color">
+              <i class="bi bi-moon-fill me-2" style="color: var(--color-text-dark);"></i>
+              <label class="theme-switch" for="checkbox">
+                <input type="checkbox" id="checkbox" />
+                <div class="slider round"></div>
+              </label>
+              <i class="bi bi-sun-fill ms-2" style="color: var(--color-text-dark);"></i>
+            </div>
+          </li>
+  
+          <li class="nav-item d-flex align-items-center me-3">
+            <a class="nav-link p-0 position-relative" href="cart.html" title="Ir al Carrito">
+              <i class="bi bi-cart3" style="font-size: 1.5rem; color: var(--color-text-dark);"></i>
+              <span id="cart-counter"
+                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                style="font-size: 0.65rem;">
+                0
+              </span>
+            </a>
+          </li>
+  
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userNameDropdown" role="button"
+              data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="bi bi-person-circle me-1" style="font-size: 1.2rem;"></i>
+              <span id="user-name">Cuenta</span>
+            </a>
+            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userNameDropdown">
+              <li><a class="dropdown-item" href="cart.html">Ver Carrito</a></li>
+              <li><a class="dropdown-item" href="my-profile.html">Mi Perfil</a></li>
+              <li>
+                <hr class="dropdown-divider">
+              </li>
+              <li><a class="dropdown-item" href="login.html" id="logoutBtn">Cerrar Sesión</a></li>
+            </ul>
+          </li>
+        </ul>
       </div>
     </div>
   </nav>
@@ -362,8 +445,170 @@
   </div>
   <script src="js/bootstrap.bundle.min.js"></script>
   <script src="js/init.js"></script>
+  <!-- Antes de cargar product-info.js: asegurar que el id esté en sessionStorage -->
+  <script>
+    (function(){
+      function getQueryParam(name){
+        const params = new URLSearchParams(window.location.search);
+        return params.get(name);
+      }
+      const idFromUrl = getQueryParam('id');
+      if(idFromUrl){
+        try { sessionStorage.setItem('selectedProductId', idFromUrl); } catch(e){}
+      } else {
+        // Si no llega id por URL y no hay selectedProductId, limpiamos posibles valores residuales
+        try {
+          const prev = sessionStorage.getItem('selectedProductId');
+          if (!prev) sessionStorage.removeItem('selectedProductId');
+        } catch(e){}
+      }
+      window.SELECTED_PRODUCT_ID = idFromUrl || sessionStorage.getItem('selectedProductId') || null;
+    })();
+  </script>
   <script src="js/product-info.js"></script>
   <script src="js/darkmode.js"></script>
+  <script src="js/cart-counter.js"></script>
+  <script>
+    // Agrega/actualiza item en localStorage bajo la clave "cart"
+    (function () {
+      function readCart() {
+        try {
+          const raw = localStorage.getItem('cart');
+          return raw ? JSON.parse(raw) : [];
+        } catch (e) {
+          console.error('Error parseando cart en localStorage', e);
+          return [];
+        }
+      }
+
+      function writeCart(items) {
+        try {
+          localStorage.setItem('cart', JSON.stringify(items));
+          console.debug('Cart guardado, items=', items.length);
+        } catch (e) {
+          console.error('Error guardando cart en localStorage', e);
+        }
+      }
+
+      function normalizeItem(item) {
+        return {
+          id: item.id || item.idProducto || item.sku || (item.title || item.name).slice(0, 60),
+          title: item.title || item.name || item.productTitle || 'Producto',
+          price: Number(item.price || item.costo || item.amount || 0) || 0,
+          qty: Number(item.qty || item.quantity || 1) || 1,
+          image: item.image || item.img || item.thumbnail || ''
+        };
+      }
+
+      // Función global que pueden llamar otros scripts
+      window.addToCart = function (rawItem) {
+        if (!rawItem) return;
+        const item = normalizeItem(rawItem);
+        const cart = readCart();
+        const idx = cart.findIndex(i => String(i.id) === String(item.id));
+        if (idx > -1) {
+          cart[idx].qty = (Number(cart[idx].qty) || 1) + (Number(item.qty) || 1);
+        } else {
+          cart.push(item);
+        }
+        writeCart(cart);
+        updateCartCounter(); // Actualizar contador
+        console.info('Añadido al carrito:', item.title, 'cantidad:', item.qty);
+      };
+
+      // Enlazar el botón "Agregar al carrito" que existe en la página
+      document.addEventListener('DOMContentLoaded', () => {
+        const addContainer = document.getElementById('add-to-cart');
+        if (!addContainer) return;
+        const addBtn = addContainer.querySelector('button.btn-primary');
+        const buyBtn = addContainer.querySelector('button#buy');
+        if (!addBtn) return;
+
+        addBtn.addEventListener('click', () => {
+          const titleEl = document.getElementById('productTitle');
+          const priceEl = document.getElementById('productPrice');
+          const imgEl = document.getElementById('mainImage');
+
+          const rawPrice = priceEl ? priceEl.textContent : '';
+          const priceNum = (rawPrice && rawPrice.match(/[\d.,]+/)) ? Number(rawPrice.replace(/[^\d.-]/g, '')) : 0;
+
+          const item = {
+            id: (window.PRODUCT_ID || titleEl && titleEl.dataset?.id) || titleEl?.textContent?.trim(),
+            title: titleEl ? titleEl.textContent.trim() : 'Producto',
+            price: priceNum,
+            qty: 1,
+            image: imgEl ? imgEl.src : ''
+          };
+          addToCart(item);
+        });
+
+        // Agregar listener para el botón de comprar ahora
+        if (buyBtn) {
+          buyBtn.addEventListener('click', () => {
+            const titleEl = document.getElementById('productTitle');
+            const priceEl = document.getElementById('productPrice');
+            const imgEl = document.getElementById('mainImage');
+
+            const rawPrice = priceEl ? priceEl.textContent : '';
+            const priceNum = (rawPrice && rawPrice.match(/[\d.,]+/)) ? Number(rawPrice.replace(/[^\d.-]/g, '')) : 0;
+
+            const item = {
+              id: (window.PRODUCT_ID || titleEl && titleEl.dataset?.id) || titleEl?.textContent?.trim(),
+              title: titleEl ? titleEl.textContent.trim() : 'Producto',
+              price: priceNum,
+              qty: 1,
+              image: imgEl ? imgEl.src : ''
+            };
+            addToCart(item);
+            window.location.href = 'cart.html';
+          });
+        }
+      });
+    })();
+  </script>
+  <script>
+    // filepath: e:\documents\product-info.html
+    (function(){
+        function getUserName(){
+            const keys = ['user','userInfo','userData','username','userName','name','fullName','profile','loggedUser'];
+            for(const k of keys){
+                try{
+                    const raw = localStorage.getItem(k) || sessionStorage.getItem(k);
+                    if(!raw) continue;
+                    try {
+                        const p = JSON.parse(raw);
+                        if(p && typeof p === 'object'){
+                            if(p.name) return p.name;
+                            if(p.username) return p.username;
+                            if(p.userName) return p.userName;
+                            if(p.fullName) return p.fullName;
+                            if(p.firstName && p.lastName) return `${p.firstName} ${p.lastName}`;
+                        }
+                    } catch(e) {}
+                    return raw;
+                } catch(e){}
+            }
+            for(let i=0;i<localStorage.length;i++){
+                const k = localStorage.key(i);
+                try{
+                    const v = localStorage.getItem(k);
+                    const p = JSON.parse(v);
+                    if(p && typeof p === 'object'){
+                        if(p.name) return p.name;
+                        if(p.username) return p.username;
+                    }
+                }catch(e){}
+            }
+            return null;
+        }
+        document.addEventListener('DOMContentLoaded', ()=>{
+            const el = document.getElementById('user-name');
+            if(!el) return;
+            const name = getUserName();
+            el.textContent = name ? name : 'Cuenta';
+        });
+    })();
+  </script>
 </body>
 
 </html>

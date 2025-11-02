@@ -2,7 +2,8 @@ const CART_ITEMS_CONTAINER_ID = "cart-items-container";
 const EMPTY_MESSAGE_ID = "empty-cart-message";
 const DETAIL_BOX_ID = "detalle-compra-box";
 
-const LOCAL_STORAGE_KEY = "carrito_productos"; 
+// Cambiar la clave para que coincida con la usada en otros archivos
+const LOCAL_STORAGE_KEY = "cart"; 
 
 function updateTotals() {
     let globalSubtotal = 0;
@@ -41,8 +42,10 @@ function handleQuantityChange(event) {
     subtotalElement.textContent = `${currency} ${newSubtotal.toFixed(2)}`;
     subtotalElement.setAttribute("data-subtotal-value", newSubtotal);
 
-    updateTotals();
     updateLocalStorageQuantity(productId, quantity);
+    updateTotals();
+    // Forzar actualización del contador después de cambiar cantidad
+    window.updateCartCounter && window.updateCartCounter();
 }
 
 function updateLocalStorageQuantity(productId, newQuantity) {
@@ -50,8 +53,16 @@ function updateLocalStorageQuantity(productId, newQuantity) {
     const index = cart.findIndex(item => item.id == productId);
 
     if (index !== -1) {
-        cart[index].quantity = newQuantity;
+        // Usar qty para mantener consistencia con el resto del código
+        cart[index].qty = newQuantity;
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart));
+        
+        // Disparar evento storage manualmente para otros listeners
+        window.dispatchEvent(new StorageEvent('storage', {
+            key: LOCAL_STORAGE_KEY,
+            newValue: JSON.stringify(cart),
+            storageArea: localStorage
+        }));
     }
 }
 
@@ -70,11 +81,29 @@ function removeItem(productId) {
     } else {
         updateTotals();
     }
+    // Forzar actualización del contador después de eliminar
+    window.updateCartCounter && window.updateCartCounter();
+    
+    // Disparar evento storage manualmente
+    window.dispatchEvent(new StorageEvent('storage', {
+        key: LOCAL_STORAGE_KEY,
+        newValue: JSON.stringify(cart),
+        storageArea: localStorage
+    }));
 }
 
 
 function createProductCard(productData) {
-    const { id, name, cost, currency, image, quantity } = productData;
+    // Normalizar datos de entrada (soporta múltiples formatos)
+    const id = productData.id || productData.productId;
+    const name = productData.title || productData.name || 'Producto';
+    const cost = Number(productData.price || productData.cost || productData.unitPrice || 0);
+    const currency = productData.currency || 'USD';
+    const image = productData.image || productData.img || productData.thumbnail;
+    const quantity = Number(productData.qty || productData.quantity || 1);
+    
+    console.debug('Renderizando producto:', {id, name, cost, quantity}); // Debug
+    
     const initialSubtotal = cost * quantity;
     
     return `
@@ -167,22 +196,30 @@ function showEmptyCart() {
 
 
 async function loadCart() {
-    const cartDataJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
+    console.debug('Iniciando carga del carrito...'); // Debug
     
-    if (cartDataJSON) {
-        try {
-            const cartItems = JSON.parse(cartDataJSON);
-            
-            if (cartItems && cartItems.length > 0) {
-                renderCart(cartItems); 
-            } else {
-                showEmptyCart();
+    // Intentar leer del localStorage
+    let cartItems = null;
+    try {
+        const cartDataJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
+        console.debug('Cart raw data:', cartDataJSON); // Debug
+        
+        if (cartDataJSON) {
+            cartItems = JSON.parse(cartDataJSON);
+            // Si es un objeto con propiedad items/products, tomar el array
+            if (cartItems && !Array.isArray(cartItems)) {
+                cartItems = cartItems.items || cartItems.products || cartItems.cart || null;
             }
-        } catch (error) {
-            console.error("Error al parsear el carrito de localStorage:", error);
-            showEmptyCart();
         }
+    } catch (error) {
+        console.error("Error al parsear el carrito:", error);
+    }
+
+    if (cartItems && Array.isArray(cartItems) && cartItems.length > 0) {
+        console.debug('Carrito encontrado, items:', cartItems.length); // Debug
+        renderCart(cartItems);
     } else {
+        console.debug('Carrito vacío o inválido'); // Debug
         showEmptyCart();
     }
 }

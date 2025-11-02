@@ -89,35 +89,28 @@ if (orderSelect) {
 }
 
 function createProductCard(product) {
-    const nameParts = product.name.split(' ');
-    const title = nameParts[0];
-    const subtitle = nameParts.slice(1).join(' ');
     return `
-        <div class="col">
-            <div class="card-product">
-                <div class="card-img-container">
-                    <img src="${product.image || 'img/placeholder.jpg'}" class="card-img-top" alt="${product.name}">
-                </div>
-                <div class="card-body">
-                    <h5 class="card-title">${title}</h5>
-                    <h6 class="card-subtitle">${subtitle}</h6>
-                    <p class="card-text">${product.description}</p>
-                    <div class="price-container">
-                        <div class="price">${product.currency} ${product.cost}</div>
-                        <div class="sales">Vendidos: ${product.soldCount}</div>
-                    </div>
-                    <div class="btn-container">
-                        <button class="btn btn-details btn-view-details" data-product-id="${product.id}">
-                            <i class="bi bi-info-circle icon"></i>Detalles
-                        </button>
-                        <button class="btn btn-buy btn-buy-now" data-product-id="${product.id}">
-                            <i class="bi bi-cart3 icon"></i>Comprar
-                        </button>
-                    </div>
+    <div class="col-md-4 mb-4">
+        <div class="card h-100">
+            <img src="${product.image}" class="card-img-top" alt="${product.name}">
+            <div class="card-body d-flex flex-column">
+                <h5 class="card-title">${product.name}</h5>
+                <p class="card-text">${product.description}</p>
+                <p class="card-text"><small class="text-muted">USD ${product.cost}</small></p>
+                <div class="mt-auto d-flex justify-content-between align-items-center">
+                    <button onclick="addToCart({
+                        id: '${product.id}',
+                        title: '${product.name}',
+                        price: ${product.cost},
+                        image: '${product.image}'
+                    })" class="btn btn-primary">
+                        <i class="bi bi-cart-plus"></i> Comprar
+                    </button>
+                    <a href="product-info.html?id=${product.id}" class="btn btn-link">Ver detalles</a>
                 </div>
             </div>
         </div>
-    `;
+    </div>`;
 }
 
 function showProducts(products) {
@@ -212,3 +205,34 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+
+function showProductsList(productsArray) {
+    const container = document.getElementById("productsContainer");
+    container.innerHTML = "";
+
+    productsArray.forEach(product => {
+        container.innerHTML += `
+            <div class="col-md-4 mb-4">
+                <div class="card h-100">
+                    <img src="${product.image}" class="card-img-top" alt="${product.name}">
+                    <div class="card-body d-flex flex-column">
+                        <h5 class="card-title">${product.name}</h5>
+                        <p class="card-text">${product.description}</p>
+                        <p class="card-text"><small class="text-muted">USD ${product.cost}</small></p>
+                        <div class="mt-auto d-flex justify-content-between align-items-center">
+                            <button onclick="addToCart({
+                                id: '${product.id}',
+                                title: '${product.name}',
+                                price: ${product.cost},
+                                image: '${product.image}'
+                            }); window.location.href='cart.html';" class="btn btn-primary">
+                                <i class="bi bi-cart-plus"></i> Comprar
+                            </button>
+                            <a href="product-info.html?id=${product.id}" class="btn btn-link">Ver detalles</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        `;
+    });
+}

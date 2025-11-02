@@ -9,9 +9,30 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function obtenerIdProducto() {
-    const productoId = localStorage.getItem('selectedProductId');
-    if (!productoId) return '50921'; // Valor por defecto
-    return productoId;
+    // Priorizar parámetro 'id' en la URL
+    try {
+        const params = new URLSearchParams(window.location.search);
+        const idFromUrl = params.get('id');
+        if (idFromUrl) {
+            // Guardar para compatibilidad con otras partes que usen storage
+            try { sessionStorage.setItem('selectedProductId', idFromUrl); } catch (e) {}
+            try { localStorage.setItem('selectedProductId', idFromUrl); } catch (e) {}
+            return idFromUrl;
+        }
+    } catch (e) {
+        // Si URLSearchParams no está disponible o falla, seguimos con fallback
+        console.warn('No se pudo leer id desde la URL:', e);
+    }
+
+    // Luego intentar storages (session primero, luego local)
+    const fromSession = sessionStorage.getItem('selectedProductId');
+    if (fromSession) return fromSession;
+
+    const fromLocal = localStorage.getItem('selectedProductId');
+    if (fromLocal) return fromLocal;
+
+    // Valor por defecto (existente)
+    return '50921';
 }
 
 // --------- Producto ---------

@@ -1,35 +1,46 @@
 // --- MODO OSCURO GLOBAL + LOGIN --- //
 document.addEventListener('DOMContentLoaded', () => {
-  const darkModeSwitch = document.getElementById('darkModeSwitch');
-  const currentTheme = localStorage.getItem('theme') || 'light';
-  document.documentElement.setAttribute('data-theme', currentTheme);
+  const themeToggle = document.getElementById('checkbox');
+  const body = document.body;
+  const root = document.documentElement;
 
-  // Reflejar el estado en el switch
-  if (darkModeSwitch) {
-    darkModeSwitch.checked = currentTheme === 'dark';
+  if (!themeToggle) return; // Si no existe el switch, salir
+
+  // Aplicar tema guardado (o sistema)
+  const savedTheme = localStorage.getItem('theme');
+  if (savedTheme) {
+    root.setAttribute('data-theme', savedTheme);
+    if (themeToggle) themeToggle.checked = savedTheme === 'dark';
+  } else {
+    const prefersDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const systemTheme = prefersDark ? 'dark' : 'light';
+    root.setAttribute('data-theme', systemTheme);
+    localStorage.setItem('theme', systemTheme);
+    if (themeToggle) themeToggle.checked = prefersDark;
   }
 
-  // Aplicar modo oscuro en login si existe estructura del login
-  aplicarModoOscuroLogin(currentTheme === 'dark');
+  // Aplicar tema guardado o por defecto
+  body.setAttribute('data-theme', savedTheme || 'light');
+  themeToggle.checked = savedTheme === 'dark';
 
-  // Escuchar cambios
-  if (darkModeSwitch) {
-    darkModeSwitch.addEventListener('change', () => {
-      const newTheme = darkModeSwitch.checked ? 'dark' : 'light';
-      document.documentElement.setAttribute('data-theme', newTheme);
-      localStorage.setItem('theme', newTheme);
-      aplicarModoOscuroLogin(newTheme === 'dark');
-    });
-  }
+  // Escuchar cambios en el switch
+  themeToggle.addEventListener('change', () => {
+    const newTheme = themeToggle.checked ? 'dark' : 'light';
+    body.setAttribute('data-theme', newTheme);
+    root.setAttribute('data-theme', newTheme);
+    localStorage.setItem('theme', newTheme);
 
-  // Detectar preferencia del sistema en la primera visita
+    // Disparar evento personalizado para que otros scripts sepan del cambio
+    window.dispatchEvent(new CustomEvent('themeChange', { detail: { theme: newTheme } }));
+  });
+
+  // Aplicar tema del sistema en primera visita
   if (!localStorage.getItem('theme')) {
     const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
     const systemTheme = prefersDark ? 'dark' : 'light';
-    document.documentElement.setAttribute('data-theme', systemTheme);
+    body.setAttribute('data-theme', systemTheme);
     localStorage.setItem('theme', systemTheme);
-    if (darkModeSwitch) darkModeSwitch.checked = prefersDark;
-    aplicarModoOscuroLogin(prefersDark);
+    themeToggle.checked = prefersDark;
   }
 });
 

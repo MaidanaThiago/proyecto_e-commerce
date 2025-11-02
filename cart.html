@@ -2,70 +2,681 @@
 <html lang="es">
 
 <head>
-  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <title>eMercado - Todo lo que busques está aquí</title>
-  <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
-  <link href="css/bootstrap.min.css" rel="stylesheet">
-  <link href="css/font-awesome.min.css" rel="stylesheet">
-  <link href="css/styles.css" rel="stylesheet">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>eMercado - Carrito de Compras</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet"
+        xintegrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Raleway:300,300i,400,400i,700,700i,900,900i" rel="stylesheet">
+    <link href="css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/styles.css" rel="stylesheet">
+
+    <style>
+        /* Se eliminaron aquí las variables CSS (migradas a css/styles.css) */
+        /* Mantener solo estilos locales específicos de la página */
+
+        .cart-item-card {
+            background-color: var(--color-card-bg);
+            border: 1px solid var(--color-card-bg);
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 15px;
+            color: var(--color-cart-text);
+            transition: background-color 0.3s;
+            min-width: 0;
+            /* Añadir para evitar desbordamiento */
+        }
+
+        .cart-item-card .flex-grow-1 {
+            min-width: 0;
+            width: 100%;
+        }
+
+        .cart-item-card .card-title {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            max-width: 100%;
+        }
+
+        .cart-item-card .price-container {
+            min-width: 120px;
+            /* Ancho mínimo para precios */
+        }
+
+        .cart-item-card .quantity-container {
+            min-width: 150px;
+            /* Ancho mínimo para cantidad */
+        }
+
+        /* Hacer el grid más responsivo */
+        @media (max-width: 768px) {
+            .cart-item-card .d-flex {
+                flex-wrap: wrap;
+                gap: 10px;
+            }
+
+            .cart-item-card .quantity-container,
+            .cart-item-card .price-container {
+                flex: 1 1 auto;
+            }
+        }
+
+        #detalle-compra-box {
+            background-color: var(--color-secondary);
+            color: var(--color-text-light);
+            border-radius: 8px;
+            box-shadow: var(--color-box-shadow);
+            padding: 30px !important;
+            transition: background-color 0.3s;
+        }
+
+        #detalle-compra-box .form-control {
+            background-color: var(--color-card-bg);
+            border-color: var(--color-card-bg);
+            color: var(--color-text-dark);
+            /* Color de texto del input para que se vea */
+        }
+
+        #detalle-compra-box .btn-outline-light {
+            color: var(--color-text-light);
+            border-color: var(--color-text-light);
+        }
+
+        #detalle-compra-box .btn-outline-light:hover {
+            background-color: var(--color-text-light);
+            color: var(--color-secondary);
+        }
+
+
+        .btn-checkout {
+            background-color: var(--color-accent);
+            border-color: var(--color-accent);
+            transition: background-color 0.3s;
+        }
+
+        .btn-checkout:hover {
+            background-color: #a83a27;
+            border-color: #a83a27;
+        }
+
+        /* Estilos del Interruptor (Switch) */
+        .theme-switch-wrapper {
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+
+        .theme-switch {
+            display: inline-block;
+            height: 24px;
+            position: relative;
+            width: 48px;
+        }
+
+        .theme-switch input {
+            display: none;
+        }
+
+        .slider {
+            background-color: #ccc;
+            bottom: 0;
+            cursor: pointer;
+            left: 0;
+            position: absolute;
+            right: 0;
+            top: 0;
+            transition: 0.4s;
+        }
+
+        .slider:before {
+            background-color: #fff;
+            bottom: 3px;
+            content: "";
+            height: 18px;
+            left: 4px;
+            position: absolute;
+            transition: 0.4s;
+            width: 18px;
+        }
+
+        input:checked+.slider {
+            background-color: #c94632;
+            /* Color de fondo del switch en modo oscuro */
+        }
+
+        input:checked+.slider:before {
+            transform: translateX(20px);
+        }
+
+        .slider.round {
+            border-radius: 34px;
+        }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+
+        /* Ajuste para el texto del footer */
+        footer a {
+            color: var(--color-accent) !important;
+        }
+
+        footer p,
+        footer a {
+            color: var(--color-text-dark) !important;
+        }
+
+        main {
+            background-color: var(--color-bg-main) !important;
+            transition: background-color 0.3s;
+        }
+
+        #spinner-wrapper {
+            background-color: var(--color-bg-body) !important;
+        }
+    </style>
 </head>
 
 <body>
-  <nav class="navbar navbar-expand-lg navbar-dark bg-dark p-1">
-    <div class="container">
-      <div class="container">
-        <div class="dark-mode-toggle">
-          <input type="checkbox" id="darkModeSwitch">
-          <label for="darkModeSwitch"></label>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarNav">
-        <ul class="navbar-nav w-100 justify-content-between">
-          <li class="nav-item">
-            <a class="nav-link" href="index.html">Inicio</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="categories.html">Categorías</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" href="sell.html">Vender</a>
-          </li>
-          <li class="nav-item">
-          </li>
-        </ul>
-      </div>
-    </div>
-  </nav>
-  <main>
-    <div class="container">
-      <div class="alert alert-danger text-center" role="alert">
-        <h4 class="alert-heading">Funcionalidad en desarrollo</h4>
-      </div>
-    </div>
-  </main>
-  <footer class="text-muted">
-    <div class="container">
-      <p class="float-end">
-        <a href="#">Volver arriba</a>
-      </p>
-      <p>Este sitio forma parte de <a href="https://jovenesaprogramar.edu.uy/" target="_blank">Jovenes a Programar</a></p>
-    </div>
-  </footer>
-  <div id="spinner-wrapper">
-    <div class="lds-ring">
-      <div></div>
-      <div></div>
-      <div></div>
-      <div></div>
-    </div>
-  </div>
-  <script src="js/bootstrap.bundle.min.js"></script>
-  <script src="js/init.js"></script>
-  <script src="js/cart.js"></script>
-  <script src="js/darkmode.js"></script>
-</body>
+    <nav class="navbar navbar-expand-lg p-2" style="background-color: var(--color-primary);">
+        <div class="container">
+            <a class="navbar-brand d-flex align-items-center me-auto" href="index.html"
+                style="color: var(--color-text-dark);">
+                <img src="img/Logo Jap.webp" alt="Logo" height="30" class="me-2">
+                <span class="fw-bold">Jóvenes a Programar</span>
+            </a>
 
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mx-auto">
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="index.html">Inicio</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="categories.html">Categorías</a>
+                    </li>
+                    <li class="nav-item me-4">
+                        <a class="nav-link" href="sell.html">Vender</a>
+                    </li>
+                </ul>
+
+                <ul class="navbar-nav d-flex align-items-center">
+                    <!-- NUEVO INTERRUPTOR DE MODO -->
+                    <li class="nav-item me-3">
+                        <div class="theme-switch-wrapper d-flex align-items-center" title="Cambiar Modo de Color">
+                            <i class="bi bi-moon-fill me-2" style="color: var(--color-text-dark);"></i>
+                            <label class="theme-switch" for="checkbox">
+                                <input type="checkbox" id="checkbox" />
+                                <div class="slider round"></div>
+                            </label>
+                            <i class="bi bi-sun-fill ms-2" style="color: var(--color-text-dark);"></i>
+                        </div>
+                    </li>
+
+                    <li class="nav-item d-flex align-items-center me-3">
+                        <a class="nav-link p-0 position-relative" href="cart.html" title="Ir al Carrito">
+                            <i class="bi bi-cart3" style="font-size: 1.5rem; color: var(--color-text-dark);"></i>
+                            <span id="cart-counter"
+                                class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                style="font-size: 0.65rem;">
+                                0
+                            </span>
+                        </a>
+                    </li>
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userNameDropdown"
+                            role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-person-circle me-1" style="font-size: 1.2rem;"></i>
+                            <span id="user-name">Cuenta</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userNameDropdown">
+                            <li><a class="dropdown-item" href="cart.html">Ver Carrito</a></li>
+                            <li><a class="dropdown-item" href="my-profile.html">Mi Perfil</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item" href="login.html" id="logoutBtn">Cerrar Sesión</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <main class="py-5">
+        <div class="container">
+            <h1 class="text-start fs-3 fw-bold mb-5 text-dark">Tu Carrito</h1>
+
+            <div id="empty-cart-message" class="mb-4" style="display: none;">
+            </div>
+
+            <div class="row g-4">
+                <div class="col-md-7">
+                    <h2 class="fs-5 fw-bold mb-3 text-dark">Artículos</h2>
+
+                    <div id="cart-items-container">
+                        <div class="cart-item-card d-flex align-items-center mb-3">
+                            <img src="https://placehold.co/100x70/c94632/white?text=Img" alt="Producto"
+                                class="img-fluid rounded me-3" style="width: 100px; height: 70px; object-fit: cover;">
+                            <div class="flex-grow-1">
+                                <h5 class="card-title fw-bold mb-1">Producto de Ejemplo</h5>
+                                <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                    <div class="price-container me-3">
+                                        <span class="text-muted small">Precio:</span>
+                                        <span class="fw-bold">USD 50.00</span>
+                                    </div>
+
+                                    <div class="quantity-container d-flex align-items-center me-3">
+                                        <span class="text-muted small me-2">Cantidad:</span>
+                                        <input type="number" id="qty-example" value="1" min="1"
+                                            class="form-control form-control-sm" style="width: 70px;">
+                                    </div>
+
+                                    <div class="subtotal-container">
+                                        <span class="text-muted small d-block">Subtotal:</span>
+                                        <span class="item-subtotal-value fw-bold">
+                                            USD 50.00
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-5">
+                    <div id="detalle-compra-box" style="display: block;">
+                        <h3 class="fw-bold mb-4 border-bottom border-light pb-3 fs-5">Resumen de Compra</h3>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-normal">Subtotal</span>
+                            <span id="cartSubtotal" class="fw-bold fs-6">USD 50.00</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-normal">Envío</span>
+                            <span id="cartEnvio" class="fw-bold text-success fs-6">Free</span>
+                        </div>
+
+                        <div class="d-flex justify-content-between mb-4">
+                            <span class="fw-normal">Tarifa</span>
+                            <span id="cartTarifa" class="fw-bold fs-6">USD 0.00</span>
+                        </div>
+
+                        <div class="mb-4">
+                            <span class="form-label fw-normal d-block mb-2">Cupón de Descuento:</span>
+                            <div class="input-group">
+                                <input type="text" id="couponInput" class="form-control" placeholder="Ingresa tu código"
+                                    style="border-radius: 4px 0 0 4px; height: 38px;">
+                                <button class="btn btn-outline-light" type="button"
+                                    style="border-radius: 0 4px 4px 0;">Aplicar</button>
+                            </div>
+                        </div>
+
+                        <hr class="border-light opacity-25 mt-4 mb-4">
+
+                        <div class="d-flex justify-content-between align-items-center mt-4">
+                            <h4 class="fw-bolder mb-0 fs-4">Total a Pagar:</h4>
+                            <h4 id="cartTotal" class="fw-bolder mb-0 fs-4">USD 50.00</h4>
+                        </div>
+
+                        <button class="btn btn-checkout btn-lg w-100 mt-4 text-uppercase fw-bold"
+                            style="border-radius: 4px;">Finalizar Compra</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer class="text-muted py-3" style="background-color: var(--color-primary);">
+        <div class="container text-center">
+            <p class="mb-0" style="color: var(--color-text-dark);">Este sitio forma parte de <a
+                    href="https://jovenesaprogramar.edu.uy/" target="_blank"
+                    style="color: var(--color-accent); text-decoration: none; font-weight: 500;">Jóvenes a Programar</a>
+            </p>
+        </div>
+    </footer>
+    <div id="spinner-wrapper">
+        <div class="lds-ring">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+    </div>
+    <script src="js/bootstrap.bundle.min.js"></script>
+    <script src="js/init.js"></script>
+    <script src="js/cart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const themeToggle = document.getElementById('checkbox');
+            const body = document.body;
+
+            const savedTheme = localStorage.getItem('theme') || 'light';
+            body.setAttribute('data-theme', savedTheme);
+            if (savedTheme === 'dark') {
+                themeToggle.checked = true;
+            }
+
+            //  Listener para cambiar el tema
+            themeToggle.addEventListener('change', () => {
+                if (themeToggle.checked) {
+                    body.setAttribute('data-theme', 'dark');
+                    localStorage.setItem('theme', 'dark');
+                } else {
+                    body.setAttribute('data-theme', 'light');
+                    localStorage.setItem('theme', 'light');
+                }
+            });
+        });
+    </script>
+
+    <!-- Nuevo script: carga y renderiza items del carrito (mejorado) -->
+    <script>
+        (function () {
+            // DEBUG: mostrar contenido directo de la clave 'cart'
+            try {
+                console.debug('localStorage.cart raw:', localStorage.getItem('cart'));
+            } catch (e) {
+                console.debug('No se puede leer localStorage.cart', e);
+            }
+
+            const preferredKeys = ['cart', 'cartItems', 'shoppingCart', 'carrito'];
+            const container = document.getElementById('cart-items-container');
+            const emptyMsg = document.getElementById('empty-cart-message');
+            const detalleBox = document.getElementById('detalle-compra-box');
+            const subtotalEl = document.getElementById('cartSubtotal');
+            const totalEl = document.getElementById('cartTotal');
+            const envioEl = document.getElementById('cartEnvio');
+            const tarifaEl = document.getElementById('cartTarifa');
+
+            function tryParse(raw) {
+                if (!raw) return null;
+                try {
+                    const first = JSON.parse(raw);
+                    // doble-encoded JSON
+                    if (typeof first === 'string') {
+                        try { return JSON.parse(first); } catch (e) { return first; }
+                    }
+                    return first;
+                } catch (e) {
+                    return null;
+                }
+            }
+
+            function scanStorages() {
+                // primero claves preferidas
+                for (const k of preferredKeys) {
+                    const rawL = localStorage.getItem(k);
+                    if (rawL) {
+                        const parsed = tryParse(rawL);
+                        if (parsed) return { parsed, key: k, storage: 'local' };
+                    }
+                    const rawS = sessionStorage.getItem(k);
+                    if (rawS) {
+                        const parsed = tryParse(rawS);
+                        if (parsed) return { parsed, key: k, storage: 'session' };
+                    }
+                }
+
+                // si no, escanear todas las claves buscando coincidencias o arrays
+                const allKeys = [...Object.keys(localStorage).map(k => ({ k, s: 'local' })),
+                ...Object.keys(sessionStorage).map(k => ({ k, s: 'session' }))];
+
+                for (const { k, s } of allKeys) {
+                    if (!/cart|carrito|shop|basket|items|product/i.test(k)) continue;
+                    const raw = (s === 'local') ? localStorage.getItem(k) : sessionStorage.getItem(k);
+                    const parsed = tryParse(raw);
+                    if (parsed) return { parsed, key: k, storage: s };
+                }
+
+                // fallback: intentar cualquier clave que contenga un array relevante
+                for (const { k, s } of allKeys) {
+                    const raw = (s === 'local') ? localStorage.getItem(k) : sessionStorage.getItem(k);
+                    const parsed = tryParse(raw);
+                    if (!parsed) continue;
+                    if (Array.isArray(parsed)) return { parsed, key: k, storage: s };
+                    if (parsed && (Array.isArray(parsed.items) || Array.isArray(parsed.products))) return { parsed, key: k, storage: s };
+                    // objeto con índices numéricos
+                    const values = Object.values(parsed).filter(v => v && (v.id || v.name || v.price));
+                    if (values.length > 0) return { parsed: values, key: k, storage: s };
+                }
+
+                return null;
+            }
+
+            function normalizeParsed(parsed) {
+                if (!parsed) return [];
+                if (Array.isArray(parsed)) return parsed;
+                if (parsed.items && Array.isArray(parsed.items)) return parsed.items;
+                if (parsed.products && Array.isArray(parsed.products)) return parsed.products;
+                // si es objeto con arreglo en alguna propiedad
+                for (const p of ['data', 'cart', 'itemsList']) {
+                    if (parsed[p] && Array.isArray(parsed[p])) return parsed[p];
+                }
+                // convertir objeto indexado a array
+                const vals = Object.values(parsed).filter(v => typeof v === 'object' && (v.price || v.name || v.id));
+                if (vals.length) return vals;
+                return [];
+            }
+
+            function saveCart(items, key, storage) {
+                const useKey = key || 'cart';
+                const raw = JSON.stringify(items);
+                if (storage === 'session') sessionStorage.setItem(useKey, raw);
+                else localStorage.setItem(useKey, raw);
+            }
+
+            function parsePrice(value) {
+                if (typeof value === 'number') return value;
+                if (!value && value !== 0) return 0;
+                const cleaned = String(value).replace(/[^\d.,-]/g, '').replace(',', '.');
+                const parsed = parseFloat(cleaned);
+                return isNaN(parsed) ? 0 : parsed;
+            }
+
+            function formatCurrency(num) {
+                return 'USD ' + Number(num).toFixed(2);
+            }
+
+            function updateTotals(items) {
+                const subtotal = items.reduce((sum, it) => {
+                    const price = parsePrice(it.price || it.unitPrice || it.amount || it.priceString);
+                    const qty = Number(it.qty || it.quantity || 1) || 1;
+                    return sum + price * qty;
+                }, 0);
+                const envio = subtotal > 0 ? 0 : 0;
+                const tarifa = 0;
+                subtotalEl.textContent = formatCurrency(subtotal);
+                envioEl.textContent = envio === 0 ? 'Free' : formatCurrency(envio);
+                tarifaEl.textContent = formatCurrency(tarifa);
+                totalEl.textContent = formatCurrency(subtotal + envio + tarifa);
+            }
+
+            function renderEmpty() {
+                container.innerHTML = '';
+                emptyMsg.style.display = 'block';
+                emptyMsg.innerHTML = `
+                    <div class="alert alert-info d-flex align-items-center" role="alert">
+                        <i class="bi bi-cart-x-fill me-2"></i>
+                        <div>
+                            Tu carrito está vacío. <a href="index.html" class="fw-bold">Ir a la tienda</a>
+                        </div>
+                    </div>
+                `;
+                if (detalleBox) detalleBox.style.display = 'none';
+            }
+
+            function renderItems(items, storageKey, storageType) {
+                container.innerHTML = '';
+                emptyMsg.style.display = 'none';
+                if (detalleBox) detalleBox.style.display = items.length ? 'block' : 'none';
+
+                items.forEach((item, idx) => {
+                    const title = item.title || item.name || item.descripcion || 'Producto';
+                    const img = item.image || item.img || item.thumbnail || 'https://placehold.co/100x70/c94632/white?text=Img';
+                    const price = parsePrice(item.price || item.unitPrice || item.amount || 0);
+                    const qty = Number(item.qty || item.quantity || 1) || 1;
+
+                    const itemDiv = document.createElement('div');
+                    itemDiv.className = 'cart-item-card d-flex align-items-center mb-3';
+                    itemDiv.innerHTML = `
+                        <img src="${img}" alt="Producto" class="img-fluid rounded me-3" style="width: 100px; height: 70px; object-fit: cover;">
+                        <div class="flex-grow-1">
+                            <h5 class="card-title fw-bold mb-1">${title}</h5>
+                            <div class="d-flex justify-content-between align-items-center flex-wrap">
+                                <div class="price-container me-3">
+                                    <span class="text-muted small">Precio:</span>
+                                    <span class="fw-bold">${formatCurrency(price)}</span>
+                                </div>
+
+                                <div class="quantity-container d-flex align-items-center me-3">
+                                    <span class="text-muted small me-2">Cantidad:</span>
+                                    <input type="number" min="1" value="${qty}" class="form-control form-control-sm" style="width: 70px;">
+                                </div>
+
+                                <div class="subtotal-container">
+                                    <span class="text-muted small d-block">Subtotal:</span>
+                                    <span class="item-subtotal-value fw-bold">
+                                        ${formatCurrency(initialSubtotal)}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    `;
+
+                    const qtyInput = itemDiv.querySelector('.cart-qty-input');
+                    const removeBtn = itemDiv.querySelector('.remove-item-btn');
+
+                    qtyInput.addEventListener('change', () => {
+                        const newQty = Math.max(1, Number(qtyInput.value) || 1);
+                        qtyInput.value = newQty;
+                        items[idx].qty = newQty;
+                        saveCart(items, storageKey, storageType);
+                        updateTotals(items);
+                    });
+
+                    removeBtn.addEventListener('click', () => {
+                        items.splice(idx, 1);
+                        saveCart(items, storageKey, storageType);
+                        if (items.length === 0) renderEmpty();
+                        else renderItems(items, storageKey, storageType);
+                        updateTotals(items);
+                    });
+
+                    container.appendChild(itemDiv);
+                });
+
+                updateTotals(items);
+            }
+
+            // Inicialización
+            const found = scanStorages();
+            if (!found) {
+                console.debug('Cart: no se encontró clave en storages.');
+                renderEmpty();
+                return;
+            }
+
+            const parsed = found.parsed;
+            const key = found.key;
+            const storageType = found.storage; // 'local' | 'session'
+            const items = normalizeParsed(parsed);
+
+            console.debug('Cart: encontrada clave=', key, 'storage=', storageType, 'itemsCount=', items.length);
+
+            if (!items || items.length === 0) {
+                renderEmpty();
+            } else {
+                renderItems(items, key, storageType);
+            }
+        })();
+    </script>
+
+    <!-- Agregar antes del cierre de body -->
+    <script>
+        function updateCartCounter() {
+            const counter = document.getElementById('cart-counter');
+            if (!counter) return;
+
+            let count = 0;
+            try {
+                const cartData = localStorage.getItem('cart');
+                if (cartData) {
+                    const cart = JSON.parse(cartData);
+                    if (Array.isArray(cart)) {
+                        count = cart.reduce((sum, item) => sum + (Number(item.qty || item.quantity) || 1), 0);
+                    }
+                }
+            } catch (e) {
+                console.error('Error al leer carrito:', e);
+            }
+
+            counter.textContent = count || '';
+            counter.style.display = count ? 'block' : 'none';
+        }
+
+        // Actualizar contador al cargar la página
+        document.addEventListener('DOMContentLoaded', updateCartCounter);
+
+        // Observar cambios en localStorage
+        window.addEventListener('storage', function (e) {
+            if (e.key === 'cart') {
+                updateCartCounter();
+            }
+        });
+    </script>
+
+    <!-- Añadir script para actualizar el nombre de usuario -->
+    <script>
+    // filepath: e:\documents\cart.html
+    (function(){
+        function getUserName(){
+            const keys = ['user','userInfo','userData','username','userName','name','fullName','profile','loggedUser'];
+            for(const k of keys){
+                try{
+                    const raw = localStorage.getItem(k) || sessionStorage.getItem(k);
+                    if(!raw) continue;
+                    try {
+                        const p = JSON.parse(raw);
+                        if(p && typeof p === 'object'){
+                            if(p.name) return p.name;
+                            if(p.username) return p.username;
+                            if(p.userName) return p.userName;
+                            if(p.fullName) return p.fullName;
+                            if(p.firstName && p.lastName) return `${p.firstName} ${p.lastName}`;
+                        }
+                    } catch(e) {}
+                    return raw;
+                } catch(e){}
+            }
+            for(let i=0;i<localStorage.length;i++){
+                const k = localStorage.key(i);
+                try{
+                    const v = localStorage.getItem(k);
+                    const p = JSON.parse(v);
+                    if(p && typeof p === 'object'){
+                        if(p.name) return p.name;
+                        if(p.username) return p.username;
+                    }
+                }catch(e){}
+            }
+            return null;
+        }
+        document.addEventListener('DOMContentLoaded', ()=>{
+            const el = document.getElementById('user-name');
+            if(!el) return;
+            const name = getUserName();
+            el.textContent = name ? name : 'Cuenta';
+        });
+    })();
+    </script>
+</body>
 </html>
