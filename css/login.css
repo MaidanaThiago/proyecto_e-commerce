@@ -1,15 +1,24 @@
 /* --------------------------------------------------
-   LOGIN.CSS MODIFICADO PARA MODO OSCURO
+   LOGIN.CSS FINAL — FUNCIONAL CON darkmode.js ORIGINAL
 -------------------------------------------------- */
 
-/* Contenedor principal */
+/* Fondo y estructura general */
+body {
+    background-color: #FFE9C8;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    font-family: "Raleway", sans-serif;
+    transition: background-color 0.4s ease, color 0.4s ease;
+}
+
+/* Centrado principal */
 .container {
     flex: 1;
     display: flex;
     justify-content: center;
     align-items: center;
     gap: 400px;
-    /* Espacio entre logo y formulario */
 }
 
 /* Logo */
@@ -28,7 +37,7 @@
     height: 350px;
 }
 
-/* Formulario de registro/login */
+/* Formulario */
 .registro {
     background: white;
     width: 410px;
@@ -41,7 +50,7 @@
 .registro h2 {
     text-align: center;
     margin-bottom: 30px;
-    transition: color 0.4s ease, text-shadow 0.4s ease;
+    font-weight: bold;
 }
 
 .input-group {
@@ -52,7 +61,6 @@
     display: block;
     font-size: 14px;
     margin-bottom: 5px;
-    transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
 .input-group input {
@@ -71,6 +79,7 @@
     border-radius: 5px;
     cursor: pointer;
     font-weight: bold;
+    color: #fff;
     transition: all 0.4s ease;
 }
 
@@ -91,168 +100,51 @@ footer {
 footer p {
     color: #976f4e;
     font-weight: bold;
-    text-decoration: none;
-    transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
 footer a {
     color: #3b2620;
     font-weight: bold;
     text-decoration: none;
-    transition: color 0.4s ease, text-shadow 0.4s ease;
 }
 
 footer a:hover {
     text-decoration: underline;
 }
 
-/* Iconos usuario/password */
+/* Iconos */
 #fotoUsuario,
 #fotoPassword {
     width: 25px;
     height: 25px;
-    float: inline-start;
+    margin-right: 6px;
+    vertical-align: middle;
 }
 
-/* -------------------------------------------
-   Responsive móviles
-------------------------------------------- */
-@media (max-width: 400px) {
-    .container {
-        flex-direction: column;
-        gap: 5px;
-    }
+/* --------------------------------------------------
+   🌙 MODO OSCURO — Basado en tus clases JS
+-------------------------------------------------- */
 
-    .logo-box {
-        padding: 5px !important;
-        margin-bottom: 2%;
-        margin-right: 70%;
-        border-radius: 20% !important;
-    }
-
-    .logo-box img {
-        width: 60px !important;
-        height: 60px !important;
-    }
-
-    .registro {
-        border-radius: 8% !important;
-        width: auto !important;
-        max-width: 80%;
-        height: auto !important;
-        min-height: 80%;
-    }
-
-    .registro h2 {
-        font-weight: bold;
-        font-size: 1.8rem;
-        margin-bottom: 18px;
-    }
-
-    .input-group label {
-        font-size: 18px;
-    }
-
-    .input-group input {
-        padding: 8px;
-        font-size: 18px;
-    }
-
-    .btn {
-        padding: 10px;
-        font-size: 18px;
-    }
-
-    #fotoUsuario,
-    #fotoPassword {
-        width: 18px;
-        height: 18px;
-    }
-
-    footer {
-        display: flex !important;
-        font-size: 13px;
-        padding: 2px !important;
-    }
-}
-
-/* -------------------------------------------
-   Responsive tablet
-------------------------------------------- */
-@media screen and (max-width: 768px) {
-    body {
-        display: flex;
-        flex-direction: column;
-        min-height: 100vh;
-        margin: 0;
-    }
-
-    main {
-        flex: 1;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-    }
-
-    .registro {
-        width: 300px;
-        border-radius: 10px;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-        padding: 20px;
-    }
-
-    .logo-box {
-        padding: 10px 10px;
-        display: inline-block;
-        position: absolute;
-        top: 20px;
-        left: 20px;
-        border-radius: 20px;
-    }
-
-    .logo-box img {
-        height: 100px;
-        width: 100px;
-    }
-
-    footer {
-        padding: 12px;
-        font-size: 14px;
-    }
-}
-
-/* -------------------------------------------
-   Modo oscuro
-------------------------------------------- */
-.dark-mode {
+body.dark-mode {
     background-color: #121A26 !important;
     color: #f0f0f0 !important;
-    text-shadow: 1px 1px 2px black, -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black;
 }
 
 .dark-logo-box {
     background: #BADCE7 !important;
-    padding: 30px !important;
 }
 
 .dark-registro {
     background: #464F59 !important;
-    width: 350px !important;
-    height: 400px !important;
-    padding: 30px !important;
-    border-radius: 10px;
+    color: white !important;
 }
 
 .dark-registro h2 {
     color: white !important;
-    font-size: 1.5rem !important;
-    margin-bottom: 20px !important;
-    text-shadow: 1px 1px 2px black;
 }
 
 .dark-registro .input-group label {
     color: white !important;
-    text-shadow: 1px 1px 2px black;
 }
 
 .dark-registro .input-group input {
@@ -264,9 +156,6 @@ footer a:hover {
 .dark-registro .btn {
     background-color: #2F4050 !important;
     color: white !important;
-    font-weight: normal !important;
-    padding: 10px !important;
-    margin-top: 10px;
 }
 
 .dark-registro .btn:hover {
@@ -275,17 +164,17 @@ footer a:hover {
 
 .dark-footer {
     background: #212529 !important;
-    padding: 15px !important;
 }
 
 .dark-footer p,
 .dark-footer a {
     color: #CED4DA !important;
-    text-shadow: 1px 1px 2px black;
 }
+
 /* --------------------------------------------------
-   🌙 BOTÓN DE MODO OSCURO (LOGIN)
+   🌙 SWITCH DE MODO OSCURO
 -------------------------------------------------- */
+
 .dark-mode-toggle {
     position: fixed;
     top: 20px;
@@ -329,8 +218,23 @@ footer a:hover {
     transform: translateX(25px);
 }
 
-/* 📱 Ajuste responsive para móviles */
+/* Responsive */
 @media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .logo-box img {
+        width: 150px;
+        height: 150px;
+    }
+
+    .registro {
+        width: 90%;
+        max-width: 400px;
+    }
+
     .dark-mode-toggle {
         top: 15px;
         right: 15px;

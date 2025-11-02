@@ -1,307 +1,547 @@
-/* --------------------------------------------------
-   VARIABLES GLOBALES
--------------------------------------------------- */
-:root {
-    --primary: #3b2620;
-    --accent: #d39c6a;
-    --success: #bba96f;
-    --background-main: #FFE9C8;
-    --background-footer: #e1b988;
-    --text-main: #976f4e;
-    --text-dark-mode: #f0f0f0;
-    /* color para modo oscuro */
+/* ==============================
+   🎨 VARIABLES DE COLOR
+   ============================== */
+:root,
+[data-theme="light"] {
+  --color-bg-body: #FFE9C8;
+  --color-bg-main: #FFE9C8;
+  --color-primary: #3b2620;
+  --color-secondary: #e1b988;
+  --color-accent: #d39c6a;
+  --color-success: #bba96f;
+  --color-text-dark: #3b2620;
+  --color-text-light: #fff;
+  --color-card-bg: #ffffff;
+  --color-box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-/* --------------------------------------------------
-   TRANSICIONES SUAVES
--------------------------------------------------- */
-*,
-.jumbotron,
-.card-body,
-.container {
-    transition: background-color 0.4s ease, color 0.4s ease, border-color 0.4s ease, filter 0.4s ease;
+/* 🌙 MODO OSCURO */
+[data-theme="dark"] {
+  --color-bg-body: #192435;
+  --color-bg-main: #2f3949;
+  --color-primary: #212a38;
+  --color-secondary: #303741;
+  --color-accent: #c94632;
+  --color-text-dark: #f0f0f0;
+  --color-text-light: #f0f0f0;
+  --color-card-bg: #2a3341;
+  --color-box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
 }
 
-/* --------------------------------------------------
-   ESTILOS GENERALES
--------------------------------------------------- */
+/* ==============================
+   🧱 BASE
+   ============================== */
 body {
-    padding-top: 76px;
-    min-height: 100vh;
-    background: var(--background-main);
+  background-color: var(--color-bg-body);
+  color: var(--color-text-dark);
+  font-family: 'Verdana', sans-serif;
+  padding-top: 76px;
+  min-height: 100vh;
+  transition: background-color 0.3s, color 0.3s;
 }
 
-@media (max-width: 767.98px) {
-    body {
-        padding-top: 60px;
-    }
+/* ==============================
+   🧭 NAVBAR
+   ============================== */
+.navbar {
+  background-color: var(--color-primary) !important;
+  box-shadow: var(--color-box-shadow);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 1030;
 }
 
-@media (min-width: 768px) and (max-width: 1023.98px) {
-    body {
-        padding-top: 70px;
-    }
+.navbar-brand,
+.navbar-nav .nav-link,
+.dropdown-toggle {
+  color: var(--color-text-light) !important;
+  font-weight: 600;
 }
 
+.dropdown-menu a.dropdown-item {
+  color: #212529 !important;
+}
+
+/* ==============================
+   🏞️ JUMBOTRON
+   ============================== */
 .jumbotron {
-    height: 50vh;
-    padding: 5em inherit;
-    margin-bottom: 0;
-    background-color: #53c0fb;
-    background: url("../img/cover_back.png");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
-    color: black;
-    font-weight: bold;
+  height: 50vh;
+  padding: 6em 2em;
+  background: url('../img/cover_back.png') center/cover no-repeat;
+  color: var(--color-text-dark);
+  font-weight: bold;
 }
 
 .jumbotron .container {
-    max-width: 40rem;
-    background-color: rgba(255, 255, 255, 0.5);
-    border-radius: 10px;
-    text-shadow: 1px 1px 2px grey;
+  background-color: rgba(255, 255, 255, 0.5);
+  border-radius: 12px;
+  text-shadow: 1px 1px 2px gray;
+  padding: 2em;
 }
 
-/* Navbar */
-.navbar {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    z-index: 1030;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-    background-color: #e1b988 !important;
-    transition: background-color 0.4s ease, box-shadow 0.4s ease;
-}
-
-.navbar a.nav-link {
-    color: #3b2620 !important;
-}
-
-.navbar a.nav-link:hover {
-    color: var(--accent) !important;
-}
-
-/* Cards */
+/* ==============================
+   🃏 TARJETAS DE PRODUCTO
+   ============================== */
 .card-product {
-    border: none;
-    border-radius: 20px;
-    overflow: hidden;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    transition: all 0.3s ease;
-    background: white;
-    height: 100%;
+  border: none;
+  border-radius: 20px;
+  background: var(--color-card-bg);
+  box-shadow: var(--color-box-shadow);
+  transition: all 0.3s ease;
+  overflow: hidden;
 }
 
 .card-product:hover {
-    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
-    transform: translateY(-5px);
+  transform: translateY(-5px);
 }
 
-/* Botones */
+.card-img-container {
+  padding: 30px;
+  background: #f9f9f9;
+  border-bottom: 1px solid #eee;
+  text-align: center;
+}
+
+.card-img-top {
+  height: 170px;
+  object-fit: contain;
+  transition: transform 0.4s ease;
+}
+
+.card-product:hover .card-img-top {
+  transform: scale(1.05);
+}
+
+.card-body {
+  padding: 25px;
+}
+
+.card-title {
+  color: var(--color-primary);
+  font-weight: 800;
+  font-size: 1.6rem;
+}
+
+.card-subtitle {
+  color: #7f8c8d;
+  font-weight: 600;
+}
+
+.card-text {
+  color: #7f8c8d;
+  background: #f8f9fa;
+  border-radius: 10px;
+  padding: 12px;
+  margin-bottom: 20px;
+}
+
+/* ==============================
+   💰 PRECIO Y BOTONES
+   ============================== */
+.price-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 25px;
+}
+
+.price {
+  color: var(--color-success);
+  font-weight: 800;
+  font-size: 1.7rem;
+}
+
+.btn-container {
+  display: flex;
+  gap: 10px;
+}
+
 .btn {
-    flex: 1;
-    padding: 12px;
-    border-radius: 12px;
-    font-weight: 600;
-    transition: all 0.4s ease;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  flex: 1;
+  padding: 12px;
+  border-radius: 12px;
+  font-weight: 600;
+  transition: all 0.3s ease;
 }
 
-/* Footer */
+.btn-details {
+  background: white;
+  border: 2px solid var(--color-primary);
+  color: var(--color-primary);
+}
+
+.btn-details:hover {
+  background: var(--color-primary);
+  color: white;
+}
+
+.btn-buy {
+  background: var(--color-accent);
+  border: 2px solid var(--color-accent);
+  color: white;
+}
+
+.btn-buy:hover {
+  background: #c0392b;
+  border-color: #c0392b;
+}
+
+/* ==============================
+   ⭐ CALIFICACIONES Y COMENTARIOS
+   ============================== */
+.star-rating i {
+  color: #ccc;
+  cursor: pointer;
+  transition: color 0.2s ease, transform 0.1s ease;
+}
+
+.star-rating i.rated {
+  color: #ffc107;
+}
+
+.star-rating i:hover {
+  transform: scale(1.1);
+}
+
+.product-comments-container {
+  background: var(--color-card-bg);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: var(--color-box-shadow);
+}
+
+/* ==============================
+   🦶 FOOTER
+   ============================== */
 footer {
-    padding-top: 3rem;
-    padding-bottom: 3rem;
-    background-color: var(--background-footer);
+  background-color: var(--color-secondary);
+  color: var(--color-text-dark);
+  padding: 3rem 0;
+  transition: background-color 0.3s;
 }
 
-/* --------------------------------------------------
-   MODO OSCURO
--------------------------------------------------- */
-body.dark-mode {
-    background-color: #1b1506;
-    color: var(--text-dark-mode);
+footer a {
+  color: var(--color-accent) !important;
 }
 
-/* Solo textos que cambian a modo oscuro reciben borde */
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode h5,
-body.dark-mode h6,
-body.dark-mode p,
-body.dark-mode .card-title,
-body.dark-mode .card-subtitle,
-body.dark-mode .card-text {
-    color: var(--text-dark-mode);
-    text-shadow: 1px 1px 2px black, -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black;
+footer p {
+  color: var(--color-text-dark) !important;
 }
 
-/* Registro */
-.dark-registro {
-    background-color: #222;
-    box-shadow: 0 0 10px rgba(255, 255, 255, 0.1);
+/* ==============================
+   💡 SWITCH DE TEMA
+   ============================== */
+.theme-switch-wrapper {
+  display: flex;
+  align-items: center;
 }
 
-/* Logo */
-.dark-logo-box img {
-    filter: brightness(0.8);
+.theme-switch {
+  position: relative;
+  width: 48px;
+  height: 24px;
 }
 
-/* Footer */
-.dark-footer {
-    background-color: #1e1e1e;
-    color: #ccc;
+.theme-switch input {
+  display: none;
 }
 
-/* Navbar modo oscuro */
-.navbar.dark-navbar {
-    background-color: #443b2d !important;
-    box-shadow: 0 2px 10px rgba(255, 255, 255, 0.1);
+.slider {
+  background-color: #ccc;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  cursor: pointer;
+  transition: 0.4s;
+  border-radius: 34px;
 }
 
-.navbar.dark-navbar a.nav-link {
-    color: #e0e0e0 !important;
+.slider:before {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  left: 4px;
+  bottom: 3px;
+  background-color: white;
+  transition: 0.4s;
+  border-radius: 50%;
 }
 
-.navbar.dark-navbar a.nav-link:hover {
-    color: var(--accent) !important;
+input:checked+.slider {
+  background-color: #c94632;
 }
 
-/* Dark mode toggle */
+input:checked+.slider:before {
+  transform: translateX(20px);
+}
+
+/* ==============================
+   📱 RESPONSIVE
+   ============================== */
+@media (max-width: 767.98px) {
+  body {
+    padding-top: 60px;
+  }
+
+  .btn-container {
+    flex-direction: column;
+  }
+
+  .price-container {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 10px;
+  }
+
+  .card-title {
+    font-size: 1.4rem;
+  }
+}
+/* ==============================
+   🌙 INTERRUPTOR DE MODO OSCURO
+   ============================== */
+
 .dark-mode-toggle {
-    position: absolute;
-    top: 10px;
-    right: 20px;
+  position: relative;
+  width: 50px;
+  height: 26px;
 }
 
 .dark-mode-toggle input {
-    display: none;
+  opacity: 0;
+  width: 0;
+  height: 0;
 }
 
 .dark-mode-toggle label {
-    display: block;
-    width: 40px;
-    height: 20px;
-    background-color: #ccc;
-    border-radius: 10px;
-    position: relative;
-    cursor: pointer;
-    transition: background-color 0.3s ease;
+  position: absolute;
+  cursor: pointer;
+  background-color: #ccc;
+  border-radius: 34px;
+  width: 100%;
+  height: 100%;
+  transition: background-color 0.3s ease;
 }
 
-.dark-mode-toggle label::after {
-    content: "";
-    position: absolute;
-    top: 2px;
-    left: 2px;
-    width: 16px;
-    height: 16px;
-    background-color: white;
-    border-radius: 50%;
-    transition: transform 0.3s ease;
+.dark-mode-toggle label::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease, background-color 0.3s ease;
 }
 
+/* Cuando está activado (modo oscuro) */
 .dark-mode-toggle input:checked+label {
-    background-color: #272113;
+  background-color: var(--color-accent);
 }
 
-.dark-mode-toggle input:checked+label::after {
-    transform: translateX(20px);
-}
-/* --------------------------------------------------
-   🖼️ OTROS ELEMENTOS
--------------------------------------------------- */
-.profile-card {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
-    background: var(--background-card);
-    border-radius: 20px;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.1);
-    padding: 2.5rem;
-    gap: 2rem;
-    margin-bottom: 3rem;
+.dark-mode-toggle input:checked+label::before {
+  transform: translateX(24px);
+  background-color: #fff;
 }
 
-.profile-form h3 {
-    color: var(--primary);
-    font-weight: 800;
+/* Sombras y animación */
+.dark-mode-toggle label::before {
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.profile-form .form-label {
-    color: var(--text-main);
-    font-weight: 600;
+/* Opcional: cambia el color según el tema */
+[data-theme="dark"] .dark-mode-toggle label {
+  background-color: #555;
 }
 
-.profile-form .form-control {
-    border-radius: 12px;
-    border: 2px solid #eee;
-    padding: 10px 15px;
-    transition: all 0.3s ease;
+/* ==============================
+   🌓 BOTÓN DE MODO OSCURO EN NAVBAR
+   ============================== */
+
+.navbar .dark-mode-toggle {
+  position: absolute;
+  right: 25px;
+  top: 50%;
+  transform: translateY(-50%);
+  margin-left: auto;
+  z-index: 1050;
 }
 
-.profile-form .form-control:focus {
-    border-color: var(--accent);
-    box-shadow: 0 0 5px rgba(211, 156, 106, 0.4);
+.navbar .dark-mode-toggle label {
+  background-color: #ccc;
+  border-radius: 34px;
+  width: 50px;
+  height: 26px;
+  display: block;
+  position: relative;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
-.comment-card {
-    background: var(--background-secondary);
-    color: var(--text-main);
-    border-radius: 10px;
-    padding: 15px;
-    margin-bottom: 15px;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
-}
-/* --------------------------------------------------
-   🌙 MODO OSCURO: BORDES EN LOS TEXTOS
--------------------------------------------------- */
-body.dark-mode {
-    color: #f0f0f0;
-    text-shadow: 1px 1px 2px black, -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black;
+.navbar .dark-mode-toggle input {
+  display: none;
 }
 
-/* También en títulos, headings y cards */
-body.dark-mode h1,
-body.dark-mode h2,
-body.dark-mode h3,
-body.dark-mode h4,
-body.dark-mode h5,
-body.dark-mode h6,
-body.dark-mode p,
-body.dark-mode .card-title,
-body.dark-mode .card-subtitle,
-body.dark-mode .card-text {
-    text-shadow: 1px 1px 2px black, -1px -1px 2px black, 1px -1px 2px black, -1px 1px 2px black;
-}
-/* --------------------------------------------------
-   📸 FOTO DE PERFIL (TAMAÑO FIJO)
--------------------------------------------------- */
-.profile-photo {
-    position: relative;
-    width: 160px;
-    /* ancho fijo */
-    height: 160px;
-    /* alto fijo */
-    border-radius: 50%;
-    overflow: hidden;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background-color: #fff;
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+.navbar .dark-mode-toggle label::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 3px;
+  width: 20px;
+  height: 20px;
+  background-color: white;
+  border-radius: 50%;
+  transition: transform 0.3s ease;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
 }
 
-.profile-photo img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    /* mantiene proporciones sin deformar */
-    border-radius: 50%;
+/* Activado (modo oscuro) */
+.navbar .dark-mode-toggle input:checked+label {
+  background-color: var(--color-accent);
+}
+
+.navbar .dark-mode-toggle input:checked+label::before {
+  transform: translateX(24px);
+}
+
+/* Tema oscuro */
+[data-theme="dark"] .navbar .dark-mode-toggle label {
+  background-color: #444;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .navbar .dark-mode-toggle {
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%) scale(0.9);
+  }
+}
+/* 🎛️ Panel de filtros */
+main>div:first-of-type,
+.row.mb-3,
+#buscador {
+  transition: all 0.3s ease;
+}
+
+main>div:first-of-type {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  background: var(--color-card-bg, #fff);
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 20px 25px;
+  max-width: 550px;
+  margin: 0 auto 25px;
+}
+
+/* Etiqueta y selector "Ordenar por" */
+main>div:first-of-type span {
+  font-weight: 700;
+  color: var(--color-primary, #333);
+}
+
+main select {
+  border-radius: 10px;
+  padding: 8px 12px;
+  font-weight: 500;
+  border: 2px solid #ccc;
+  background-color: #fafafa;
+  transition: border-color 0.3s;
+}
+
+main select:focus {
+  border-color: var(--color-accent, #007bff);
+}
+
+/* Inputs de precios y botón */
+.row.mb-3 {
+  justify-content: center;
+  gap: 10px;
+  background: var(--color-card-bg, #fff);
+  border-radius: 16px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  max-width: 550px;
+  margin: 0 auto 25px;
+  padding: 20px 25px;
+}
+
+.form-control {
+  border-radius: 10px;
+  border: 2px solid #ccc;
+  padding: 10px 12px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+.form-control:focus {
+  border-color: var(--color-accent, #007bff);
+  background: #fff;
+}
+
+.btn-primary {
+  background: var(--color-accent, #007bff);
+  border: none;
+  border-radius: 12px;
+  font-weight: 700;
+  padding: 10px 20px;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--color-primary, #0056b3);
+  transform: scale(1.05);
+}
+
+/* Buscador */
+#buscador {
+  max-width: 550px;
+  margin: 0 auto 30px;
+  border-radius: 12px;
+  border: 2px solid #ccc;
+  padding: 12px 14px;
+  transition: border-color 0.3s, background 0.3s;
+}
+
+#buscador:focus {
+  border-color: var(--color-accent, #007bff);
+  background: #fff;
+}
+
+/* 🌙 Modo oscuro */
+[data-theme="dark"] main>div:first-of-type,
+[data-theme="dark"] .row.mb-3,
+[data-theme="dark"] #buscador {
+  background: #1f2a38;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+}
+
+[data-theme="dark"] main span,
+[data-theme="dark"] label {
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .form-control,
+[data-theme="dark"] select,
+[data-theme="dark"] #buscador {
+  background: #2b3545;
+  border-color: #3e4a5c;
+  color: #f0f0f0;
+}
+
+[data-theme="dark"] .btn-primary {
+  background: #c94632;
+}
+
+[data-theme="dark"] .btn-primary:hover {
+  background: #d75a45;
 }
