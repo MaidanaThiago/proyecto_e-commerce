@@ -59,3 +59,60 @@ document.addEventListener('DOMContentLoaded', function () {
     navList.appendChild(li);
   }
 });
+
+
+const LIGHT_MODE_KEY = 'lightModeEnabled';
+
+function applyLightMode(isEnabled) {
+    const body = document.body;
+    const iconLeft = document.getElementById('darkModeIcon');
+    const toggleRight = document.getElementById('darkModeToggleRight');
+    
+    if (isEnabled) {
+        body.classList.add('light-mode');
+        // Icono izquierdo cambia a Luna (para indicar que se puede volver a oscuro)
+        if (iconLeft) iconLeft.classList.replace('bi-sun-fill', 'bi-moon-fill');
+        if (toggleRight) toggleRight.checked = true;
+        localStorage.setItem(LIGHT_MODE_KEY, 'true');
+    } else {
+        body.classList.remove('light-mode');
+        // Icono izquierdo cambia a Sol (para indicar que se puede volver a claro)
+        if (iconLeft) iconLeft.classList.replace('bi-moon-fill', 'bi-sun-fill');
+        if (toggleRight) toggleRight.checked = false;
+        localStorage.setItem(LIGHT_MODE_KEY, 'false');
+    }
+}
+
+function toggleMode() {
+    const isLightEnabled = document.body.classList.contains('light-mode');
+    applyLightMode(!isLightEnabled);
+}
+
+
+document.addEventListener('DOMContentLoaded', function () {
+    const savedPreference = localStorage.getItem(LIGHT_MODE_KEY);
+    const initialMode = savedPreference === 'true'; 
+    applyLightMode(initialMode);
+    
+    const toggleButtonLeft = document.getElementById('darkModeToggle');
+    const toggleButtonRight = document.getElementById('darkModeToggleRight');
+    
+    if (toggleButtonLeft) {
+        toggleButtonLeft.addEventListener('click', toggleMode);
+    }
+    if (toggleButtonRight) {
+        toggleButtonRight.addEventListener('click', toggleMode);
+    }
+    
+    const userName = sessionStorage.getItem('usuario');
+    const userNameText = document.getElementById('userNameText');
+    
+    if (userName && userNameText) {
+        userNameText.textContent = userName;
+    }
+
+    document.getElementById('logoutBtn')?.addEventListener('click', function() {
+        sessionStorage.removeItem('usuario');
+        window.location.href = 'login.html'; 
+    });
+});

@@ -1,6 +1,30 @@
 let productsArray = [];
+const CART_LOCAL_STORAGE_KEY = "carrito_productos"; 
 
-// Redirección a login.html si no hay sesión iniciada
+function addToCart(product) {
+    let cart = JSON.parse(localStorage.getItem(CART_LOCAL_STORAGE_KEY)) || [];
+
+    const existingProductIndex = cart.findIndex(item => item.id == product.id);
+
+    if (existingProductIndex !== -1) {
+        cart[existingProductIndex].quantity += 1;
+        console.log(`Producto ${product.name} actualizado. Cantidad: ${cart[existingProductIndex].quantity}`);
+    } else {
+        const itemToAdd = {
+            id: product.id,
+            name: product.name,
+            cost: product.cost,
+            currency: product.currency,
+            image: product.image,
+            quantity: 1 
+        };
+        cart.push(itemToAdd);
+        console.log(`Producto ${product.name} agregado.`);
+    }
+    
+    localStorage.setItem(CART_LOCAL_STORAGE_KEY, JSON.stringify(cart));
+}
+
 document.addEventListener('DOMContentLoaded', function () {
     const usuario = sessionStorage.getItem('usuario');
     if (!usuario) {
@@ -9,7 +33,6 @@ document.addEventListener('DOMContentLoaded', function () {
     }
     loadProducts();
 
-    // Filtro de precios
     const filterBtn = document.getElementById('filterPriceBtn');
     if (filterBtn) {
         filterBtn.addEventListener('click', function () {
@@ -20,26 +43,24 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-const buscador = document.getElementById('buscador');
-buscador.addEventListener('input', function() {
-    const textoBusqueda = buscador.value.toLowerCase();
-    const arrayFiltrado = [];
+    const buscador = document.getElementById('buscador');
+    buscador.addEventListener('input', function() {
+        const textoBusqueda = buscador.value.toLowerCase();
+        const arrayFiltrado = [];
 
-    productsArray.forEach(articulo => {
-        const titulo = articulo.name.toLowerCase();
-        const descripcion = articulo.description.toLowerCase();
+        productsArray.forEach(articulo => {
+            const titulo = articulo.name.toLowerCase();
+            const descripcion = articulo.description.toLowerCase();
 
-        if (titulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda)) {
-            arrayFiltrado.push(articulo);
-        }
+            if (titulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda)) {
+                arrayFiltrado.push(articulo);
+            }
+        });
+
+        showProducts(arrayFiltrado);
     });
 
-    showProducts(arrayFiltrado);
-});
-
-    //Event listener para el botón de Detalles
     document.addEventListener('click', function(e) {
-        // Para el botón de Detalles
         if (e.target.closest('.btn-view-details')) {
             const button = e.target.closest('.btn-view-details');
             const productId = button.getAttribute('data-product-id');
@@ -49,15 +70,32 @@ buscador.addEventListener('input', function() {
             return;
         }
         
-        // Para el botón de Comprar (opcional)
+       
         if (e.target.closest('.btn-buy-now')) {
             const button = e.target.closest('.btn-buy-now');
             const productId = button.getAttribute('data-product-id');
-            console.log('Comprar producto:', productId);
-            // addToCart(productId);
+            
+            const product = productsArray.find(p => p.id == productId);
+
+            if (product) {
+                addToCart(product);
+                
+                button.textContent = "¡Agregado!";
+                button.classList.remove('btn-buy');
+                button.classList.add('btn-success');
+                setTimeout(() => {
+                    button.textContent = "Comprar";
+                    button.classList.remove('btn-success');
+                    button.classList.add('btn-buy');
+                }, 1000); // 1 segundo de feedback
+            } else {
+                console.error("Producto no encontrado en el array local.");
+            }
+            return;
         }
     });
 });
+
 
 // Ordenar tarjetas
 const orderSelect = document.getElementById('orderProducts');
@@ -88,7 +126,11 @@ if (orderSelect) {
     });
 }
 
+
 function createProductCard(product) {
+    
+   
+    const productId = product.id; 
     const nameParts = product.name.split(' ');
     const title = nameParts[0];
     const subtitle = nameParts.slice(1).join(' ');
@@ -107,10 +149,10 @@ function createProductCard(product) {
                         <div class="sales">Vendidos: ${product.soldCount}</div>
                     </div>
                     <div class="btn-container">
-                        <button class="btn btn-details btn-view-details" data-product-id="${product.id}">
+                        <button class="btn btn-details btn-view-details" data-product-id="${productId}">
                             <i class="bi bi-info-circle icon"></i>Detalles
                         </button>
-                        <button class="btn btn-buy btn-buy-now" data-product-id="${product.id}">
+                        <button class="btn btn-buy btn-buy-now" data-product-id="${productId}">
                             <i class="bi bi-cart3 icon"></i>Comprar
                         </button>
                     </div>
@@ -138,8 +180,9 @@ function loadProducts() {
             return response.json();
         })
         .then(data => {
-            productsArray = data.products; // Guardar productos en variable global
-            showProducts(productsArray);   // Mostrar todos al inicio
+           
+            productsArray = data.products;
+            showProducts(productsArray);  // Mostrar todos al inicio
         })
         .catch(error => {
             console.error('Error cargando productos:', error);
@@ -150,65 +193,3 @@ function loadProducts() {
             `;
         });
 }
-// Array para guardar los productos
-
-
-// Función para mostrar la lista de productos
-function showProductsList(array) {
-    let htmlContentToAppend = "";
-
-    if (array.length === 0) {
-        htmlContentToAppend = `<h4>No se encontraron productos en esta categoría.</h4>`;
-    } else {
-        for (let i = 0; i < array.length; i++) {
-            let product = array[i];
-            htmlContentToAppend += `
-            <div class="list-group-item list-group-item-action">
-                <div class="row">
-                    <div class="col-3">
-                        <img src="${product.imgSrc}" alt="product image" class="img-thumbnail">
-                    </div>
-                    <div class="col">
-                        <div class="d-flex w-100 justify-content-between">
-                            <div class="mb-1">
-                                <h4>${product.name} - ${product.currency} ${product.cost}</h4>
-                                <p>${product.description}</p>
-                            </div>
-                            <small class="text-muted">${product.soldCount} artículos</small>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            `;
-        }
-    }
-
-    document.getElementById("cat-list-container").innerHTML = htmlContentToAppend;
-}
-
-// Cuando el documento se carga
-document.addEventListener("DOMContentLoaded", function () {
-    // Obtiene el ID de la categoría del almacenamiento local
-    const catID = localStorage.getItem("catID");
-
-    if (!catID) {
-        // Si no hay categoría seleccionada, muestra un mensaje de error
-        document.getElementById("cat-list-container").innerHTML =
-            `<h4 class="text-danger">No se encontró ninguna categoría seleccionada.</h4>`;
-        return;
-    }
-
-    // Construye la URL usando el ID dinámico
-    const URL_COMPLETA = PRODUCTS_URL + catID + EXT_TYPE;
-
-    // Hace la solicitud y carga los productos
-    getJSONData(URL_COMPLETA).then(function (resultObj) {
-        if (resultObj.status === "ok") {
-            productsArray = resultObj.data.products;
-            showProductsList(productsArray);
-        } else {
-            document.getElementById("cat-list-container").innerHTML =
-                `<h4 class="text-danger">Error al cargar los productos.</h4>`;
-        }
-    });
-});
