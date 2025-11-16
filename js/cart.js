@@ -14,12 +14,24 @@ function updateTotals() {
         currency = subtotalElem.getAttribute("data-currency") || currency; 
     });
     
-    const total = globalSubtotal;
+    
 
     document.getElementById("cartSubtotal").textContent = `${currency} ${globalSubtotal.toFixed(2)}`;
-    document.getElementById("cartEnvio").textContent = `Free`; 
-    document.getElementById("cartTarifa").textContent = `---`; 
+    document.getElementById("cartEnvio").textContent = `${currency} ${calcularCostoEnvio(globalSubtotal).toFixed(2)}`; 
+
+    const total = globalSubtotal + calcularCostoEnvio(globalSubtotal);
+
     document.getElementById("cartTotal").textContent = `${currency} ${total.toFixed(2)}`;
+}
+
+function calcularCostoEnvio(precioBase) {
+  const radioSeleccionado = document.querySelector('input[name="tipoEnvio"]:checked');
+
+  const factorEnvio = parseFloat(radioSeleccionado.value); 
+  
+  const costoEnvio = precioBase * factorEnvio;
+  
+  return costoEnvio;
 }
 
 function handleQuantityChange(event) {
