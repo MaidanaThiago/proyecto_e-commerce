@@ -34,28 +34,43 @@ function calcularCostoEnvio(precioBase) {
   return costoEnvio;
 }
 
+// Añadir función auxiliar de formato
+function formatCurrency(value, currency = 'USD') {
+	// Acepta número o string numérico
+	const num = Number(value) || 0;
+	// Formato simple: "USD 1234.00"
+	return `${currency} ${num.toFixed(2)}`;
+}
+
 function handleQuantityChange(event) {
     const input = event.target;
     let quantity = parseInt(input.value);
-    
+
     if (isNaN(quantity) || quantity < 1) {
         quantity = 1;
         input.value = 1;
     }
 
     const card = input.closest(".cart-item-card");
-    const unitCost = parseFloat(card.getAttribute("data-unit-cost"));
-    const currency = card.getAttribute("data-currency");
+    if (!card) return;
+
+    const unitCost = parseFloat(card.getAttribute("data-unit-cost")) || 0;
+    const currency = card.getAttribute("data-currency") || 'USD';
     const productId = card.getAttribute("data-product-id");
-    
+
     const newSubtotal = unitCost * quantity;
 
     const subtotalElement = card.querySelector(".item-subtotal-value");
-    subtotalElement.textContent = `${currency} ${newSubtotal.toFixed(2)}`;
-    subtotalElement.setAttribute("data-subtotal-value", newSubtotal);
+    if (subtotalElement) {
+        subtotalElement.textContent = formatCurrency(newSubtotal, currency);
+        subtotalElement.setAttribute("data-subtotal-value", String(newSubtotal));
+        subtotalElement.setAttribute("data-currency", currency);
+    }
 
+    // Actualizar cantidad en el localStorage y totales
     updateLocalStorageQuantity(productId, quantity);
     updateTotals();
+
     // Forzar actualización del contador después de cambiar cantidad
     window.updateCartCounter && window.updateCartCounter();
 }
@@ -177,7 +192,9 @@ function renderCart(cartItems) {
     container.innerHTML = cartItems.map(createProductCard).join('');
 
     document.querySelectorAll(".quantity-input").forEach(input => {
+        // Escuchar input para actualización en tiempo real y change como respaldo
         input.addEventListener('input', handleQuantityChange);
+        input.addEventListener('change', handleQuantityChange);
     });
     
     document.querySelectorAll(".remove-item-btn").forEach(button => {

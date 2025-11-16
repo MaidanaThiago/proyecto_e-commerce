@@ -321,6 +321,7 @@ footer p {
 		font-size: 1.4rem;
 	}
 }
+
 /* ==============================
    🌙 INTERRUPTOR DE MODO OSCURO
    ============================== */
@@ -597,9 +598,300 @@ main select:focus {
 }
 main{
   background-color: var(--color-bg-main) !important;
-  color: var(--color-bg-main) !important;
+  color: var(--color-text-dark) !important; /* antes estaba var(--color-bg-main) causando texto ilegible y aspecto "aplastado" */
 }
 
-.product-comments-container mt-5  {
-  background-color: var(--color-card-bg) !important;
+/* Ajuste menor para que el detalle no quede pegado al navbar fijo */
+@media (min-width: 992px) {
+	#detalle-compra-box { top: 110px; } /* ligeramente menor/ajustable según altura real del navbar */
+}
+
+/* ==============================
+   🛒 Ajustes específicos para la página del carrito
+   ============================== */
+/* Hacemos la fila principal (la que contiene col-md-7 y col-md-5) un flex container en pantallas >=768 */
+@media (min-width: 768px) {
+	/* Selecciona la row principal dentro del main (la que contiene .col-md-7 y .col-md-5) */
+	main > .container > .row.g-4 {
+		display: flex;
+		gap: 28px;
+		align-items: flex-start;
+		/* evita que columnas se vuelvan demasiado estrechas */
+	}
+
+	/* Forzar ancho relativo de columnas */
+	main > .container > .row.g-4 > .col-md-7 {
+		flex: 0 0 65%;
+		max-width: 65%;
+	}
+
+	main > .container > .row.g-4 > .col-md-5 {
+		flex: 0 0 35%;
+		max-width: 35%;
+	}
+}
+
+/* En móviles, apilamos columnas y garantizamos espacio */
+@media (max-width: 767.98px) {
+	main > .container > .row.g-4 {
+		display: block;
+	}
+	main > .container > .row.g-4 > .col-md-7,
+	main > .container > .row.g-4 > .col-md-5 {
+		width: 100%;
+		max-width: 100%;
+	}
+}
+
+/* Asegurar que los items del carrito ocupen 100% del contenedor izquierdo y no se encojan */
+#cart-items-container {
+	width: 100%;
+	box-sizing: border-box;
+}
+
+#cart-items-container .cart-item-card {
+	width: 100%;
+	display: flex;
+	align-items: center;
+	gap: 16px;
+	padding: 18px;
+	margin-bottom: 18px;
+	box-shadow: var(--color-box-shadow);
+	background: var(--color-card-bg) !important;
+}
+
+/* Imagen más pequeña y contenido flexible */
+#cart-items-container .cart-item-card img {
+	width: 110px;
+	height: 80px;
+	object-fit: cover;
+	flex: 0 0 110px;
+}
+
+/* Contenedor de información flexible para evitar overflow */
+#cart-items-container .cart-item-card .flex-grow-1 {
+	flex: 1 1 auto;
+	min-width: 0;
+}
+
+/* Ajustes para subtotales y inputs */
+#cart-items-container .item-subtotal-value {
+	font-size: 1rem;
+}
+
+/* Input cantidad */
+#cart-items-container .quantity-input {
+	width: 72px;
+	min-width: 56px;
+}
+
+/* Botón borrar: no comprimir */
+#cart-items-container .remove-item-btn {
+	flex: 0 0 auto;
+	margin-left: 8px;
+}
+
+/* Resumen de compra: mejor separación interna y full-width en móviles */
+#detalle-compra-box {
+	padding: 24px !important;
+	border-radius: 10px;
+	background: var(--color-secondary) !important;
+	color: var(--color-text-light) !important;
+	box-sizing: border-box;
+}
+
+/* Inputs dentro del detalle: full width */
+#detalle-compra-box .form-control,
+#detalle-compra-box select {
+	width: 100%;
+	box-sizing: border-box;
+	margin-bottom: 10px;
+}
+
+/* Si el sticky overlapea o queda muy cerca, bajarlo un poco */
+@media (min-width: 992px) {
+	#detalle-compra-box { top: 110px; } /* compensa navbar y un poco de margen */
+}
+
+/* Asegurar espacio superior para navbar fijo (si aún no se ve bien) */
+@media (min-width: 768px) {
+	body { padding-top: 90px; } /* ajustar si tu navbar ocupa otra altura */
+}
+
+/* Pequeñas mejoras visuales para evitar sensación "aplastada" */
+main { padding-bottom: 40px; }
+
+/* Evitar que las tarjetas internas reduzcan fuente en pantallas pequeñas */
+@media (max-width: 767.98px) {
+	.cart-item-card .card-title { font-size: 1.05rem; }
+	#detalle-compra-box { margin-top: 18px; }
+}
+
+/* ==============================
+   🛠 Mejoras layout carrito - Desktop
+   ============================== */
+
+/* Dar más anchura al contenedor principal en pantallas grandes */
+@media (min-width: 992px) {
+	/* Aumenta el ancho máximo para dar más espacio a columnas */
+	main > .container {
+		max-width: 1200px;
+	}
+
+	/* Forzar layout en 2 columnas sin que colapse */
+	main > .container > .row.g-4 {
+		display: flex;
+		gap: 32px;
+		align-items: flex-start;
+		flex-wrap: nowrap;
+		width: 100%;
+		box-sizing: border-box;
+	}
+
+	/* Proporciones de columnas: izquierda más ancha, derecha fija */
+	main > .container > .row.g-4 > .col-md-7 {
+		flex: 0 0 72%;
+		max-width: 72%;
+		min-width: 680px; /* evita compresión excesiva en pantallas anchas */
+		box-sizing: border-box;
+	}
+
+	main > .container > .row.g-4 > .col-md-5 {
+		flex: 0 0 28%;
+		max-width: 28%;
+		min-width: 300px;
+		box-sizing: border-box;
+	}
+
+	/* Asegurar que el area de items use todo su ancho */
+	#cart-items-container {
+		width: 100%;
+	}
+
+	/* Imagenes del carrito ligeramente más grandes para desktop */
+	#cart-items-container .cart-item-card img {
+		width: 140px;
+		height: 95px;
+		flex: 0 0 140px;
+	}
+
+	/* Evitar que inputs y subtotales se encojan */
+	#cart-items-container .quantity-input { width: 84px; }
+	#cart-items-container .item-subtotal-value { min-width: 120px; text-align: right; display:inline-block; }
+
+	/* Ajuste sticky detalle para no solapar el navbar */
+	#detalle-compra-box {
+		position: sticky;
+		top: 100px;
+	}
+}
+
+/* Mantener buen espaciado en pantallas medianas */
+@media (min-width: 768px) and (max-width: 991.98px) {
+	main > .container { max-width: 960px; }
+	main > .container > .row.g-4 { display: block; }
+	body { padding-top: 72px; }
+}
+
+/* Reducir padding-top si estaba demasiado grande (evita que el contenido aparente estar "chico") */
+@media (min-width: 768px) {
+	body { padding-top: 72px; } /* ajustable según la altura real del navbar */
+}
+
+/* Asegurar que los items se adapten y no encojan su texto */
+#cart-items-container .cart-item-card {
+	min-height: 110px;
+	align-items: center;
+}
+
+/* Si usas Bootstrap row con gutters, mantenemos box-sizing para evitar overflow de columnas */
+.row.g-4 { box-sizing: border-box; }
+
+/* Pequeñas mejoras visuales */
+#detalle-compra-box { padding: 28px !important; }
+
+
+/* ============================
+   FIXES GENERALES PARA CARRITO
+   ============================ */
+
+/* Fondo del main más neutro para que el contenido destaque */
+main {
+	background-color: var(--color-bg-body) !important;
+	padding-top: 40px !important;
+	padding-bottom: 60px !important;
+}
+
+/* Layout general del carrito */
+@media (min-width: 768px) {
+	main>.container>.row.g-4 {
+		display: flex;
+		gap: 36px;
+		align-items: flex-start;
+		flex-wrap: nowrap;
+	}
+
+	/* Izquierda más grande, derecha más compacta */
+	main>.container>.row.g-4>.col-md-7 {
+		flex: 0 0 70%;
+		max-width: 70%;
+	}
+
+	main>.container>.row.g-4>.col-md-5 {
+		flex: 0 0 30%;
+		max-width: 30%;
+	}
+}
+
+/* Tarjeta del ítem del carrito */
+#cart-items-container .cart-item-card {
+	display: flex;
+	background: var(--color-card-bg) !important;
+	box-shadow: var(--color-box-shadow);
+	padding: 20px;
+	border-radius: 12px;
+	gap: 20px;
+}
+
+#cart-items-container .cart-item-card img {
+	width: 130px;
+	height: 90px;
+	object-fit: cover;
+	border-radius: 8px;
+}
+
+/* Evita que los nombres y subtotales se corten */
+#cart-items-container .cart-item-card .flex-grow-1 {
+	min-width: 0;
+}
+
+/* Input de cantidad */
+.quantity-input {
+	width: 70px;
+}
+
+/* Panel derecho – más claro, legible y estético */
+#detalle-compra-box {
+	background: var(--color-card-bg) !important;
+	color: var(--color-text-dark) !important;
+	padding: 28px !important;
+	border-radius: 12px;
+	box-shadow: var(--color-box-shadow);
+}
+
+/* En modo oscuro, sigue coherente */
+[data-theme="dark"] #detalle-compra-box {
+	background: var(--color-secondary) !important;
+	color: var(--color-text-light) !important;
+}
+
+/* Inputs del detalle */
+#detalle-compra-box .form-control {
+	background: var(--color-card-bg) !important;
+	border: 2px solid #ddd;
+}
+
+[data-theme="dark"] #detalle-compra-box .form-control {
+	background: #2c3544 !important;
+	border-color: #444;
 }
