@@ -295,18 +295,83 @@
                         <h3 class="fw-bold mb-4 border-bottom border-light pb-3 fs-5">Resumen de Compra</h3>
 
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="fw-normal">Subtotal</span>
-                            <span id="cartSubtotal" class="fw-bold fs-6">USD 50.00</span>
+                            <span class="fw-normal">Tipo de envío</span>
+                        </div>
+
+                        <form class="fw-bold fs-6">
+                            <input type="radio" id="opcion1" name="tipoEnvio" value="0.15" onchange="updateTotals()">
+                            <label for="opcion1">Premium 2 a 5 días (15%)</label><br>
+
+                            <input type="radio" id="opcion2" name="tipoEnvio" value="0.07" onchange="updateTotals()">
+                            <label for="opcion2">Express 5 a 8 días (7%)</label><br>
+                            
+                            <!--La opción de envío estándar se mantiene seleccionada por defecto con "checked"-->
+                            <input type="radio" id="opcion3" name="tipoEnvio" value="0.05" onchange="updateTotals()" checked>
+                            <label for="opcion3">Standard 12 a 15 días (5%)</label>
+                        </form>
+
+                        <br>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-normal">Dirección de envío</span>
+                        </div>
+                        
+                        <form id="formularioDireccion">
+                            <div>
+                                <label for="departamento">Departamento:</label><br>
+                                <input type="text" id="departamento" name="departamento" required>
+                            </div>
+                            
+                            <div>
+                                <label for="localidad">Localidad:</label><br>
+                                <input type="text" id="localidad" name="localidad" required>
+                            </div>
+                            
+                            <div>
+                                <label for="calle">Calle:</label><br>
+                                <input type="text" id="calle" name="calle" required>
+                            </div>
+                            
+                            <div>
+                                <label for="numero">Número:</label><br>
+                                <input type="number" id="numero" name="numero" required>
+                            </div>
+                            
+                            <div>
+                                <label for="esquina">Esquina:</label><br>
+                                <input type="text" id="esquina" name="esquina" required>
+                            </div>
+                        </form>
+
+                        <br>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-normal">Forma de pago</span>
+                        </div>
+
+                        <form class="fw-bold fs-6">
+                            <!--La opción de tarjeta de crédito se mantiene seleccionada por defecto con "checked"-->
+                            <input type="radio" id="opcion1" name="formaPago" value="valor1" checked>
+                            <label for="opcion1">Tarjeta de crédito</label><br>
+
+                            <input type="radio" id="opcion2" name="formaPago" value="valor2">
+                            <label for="opcion2">Transferencia bancaria</label><br>                          
+                        </form>
+
+                        <br>
+
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-normal">Costos</span>
                         </div>
 
                         <div class="d-flex justify-content-between mb-2">
-                            <span class="fw-normal">Envío</span>
-                            <span id="cartEnvio" class="fw-bold text-success fs-6">Free</span>
+                            <span class="fw-normal">Subtotal</span>
+                            <span id="cartSubtotal" class="fw-bold text-success fs-6">USD 50.00</span>
                         </div>
 
-                        <div class="d-flex justify-content-between mb-4">
-                            <span class="fw-normal">Tarifa</span>
-                            <span id="cartTarifa" class="fw-bold fs-6">USD 0.00</span>
+                        <div class="d-flex justify-content-between mb-2">
+                            <span class="fw-normal">Costo de envío</span>
+                            <span id="cartEnvio" class="fw-bold text-success fs-6">Free</span>
                         </div>
 
                         <div class="mb-4">
