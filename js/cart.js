@@ -254,3 +254,4 @@ async function loadCart() {
 }
 
 document.addEventListener("DOMContentLoaded", loadCart);
+

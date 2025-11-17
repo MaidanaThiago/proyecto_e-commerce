@@ -391,8 +391,10 @@
                             <h4 id="cartTotal" class="fw-bolder mb-0 fs-4">USD 50.00</h4>
                         </div>
 
-                        <button class="btn btn-checkout btn-lg w-100 mt-4 text-uppercase fw-bold"
-                            style="border-radius: 4px;">Finalizar Compra</button>
+                        <button id="btnFinalizarCompra" class="btn btn-checkout btn-lg w-100 mt-4 text-uppercase fw-bold"
+                            style="border-radius: 4px;">
+                            Finalizar Compra
+                        </button>
                     </div>
                 </div>
             </div>
@@ -742,6 +744,43 @@
             el.textContent = name ? name : 'Cuenta';
         });
     })();
+
+    document.addEventListener("DOMContentLoaded", () => {
+    const finalizarBtn = document.getElementById("btnFinalizarCompra");
+
+    finalizarBtn.addEventListener("click", () => {
+        // Validar dirección
+        const campos = ["departamento", "localidad", "calle", "numero", "esquina"];
+        for (const id of campos) {
+            if (!document.getElementById(id).value.trim()) {
+                alert("Por favor completa todos los campos de dirección.");
+                return;
+            }
+        }
+
+        // Validar forma de pago
+        const formaPagoSeleccionada = document.querySelector("input[name='formaPago']:checked");
+        if (!formaPagoSeleccionada) {
+            alert("Selecciona una forma de pago.");
+            return;
+        }
+
+        // Validar tipo de envío
+        const envioSeleccionado = document.querySelector("input[name='tipoEnvio']:checked");
+        if (!envioSeleccionado) {
+            alert("Selecciona un método de envío.");
+            return;
+        }
+
+        // Si todo está bien
+        alert("¡Compra realizada con éxito!");
+
+        // Podés redirigir si querés
+        // window.location.href = "success.html";
+    });
+});
     </script>
+
+    
 </body>
 </html>
