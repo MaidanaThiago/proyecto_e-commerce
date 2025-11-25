@@ -3,21 +3,21 @@ const EMPTY_MESSAGE_ID = "empty-cart-message";
 const DETAIL_BOX_ID = "detalle-compra-box";
 
 // Cambiar la clave para que coincida con la usada en otros archivos
-const LOCAL_STORAGE_KEY = "cart"; 
+const LOCAL_STORAGE_KEY = "cart";
 
 function updateTotals() {
     let globalSubtotal = 0;
-    let currency = "USD"; 
+    let currency = "USD";
 
     document.querySelectorAll(".item-subtotal-value").forEach(subtotalElem => {
         globalSubtotal += parseFloat(subtotalElem.getAttribute("data-subtotal-value") || 0);
-        currency = subtotalElem.getAttribute("data-currency") || currency; 
+        currency = subtotalElem.getAttribute("data-currency") || currency;
     });
-    
-    
+
+
 
     document.getElementById("cartSubtotal").textContent = `${currency} ${globalSubtotal.toFixed(2)}`;
-    document.getElementById("cartEnvio").textContent = `${currency} ${calcularCostoEnvio(globalSubtotal).toFixed(2)}`; 
+    document.getElementById("cartEnvio").textContent = `${currency} ${calcularCostoEnvio(globalSubtotal).toFixed(2)}`;
 
     const total = globalSubtotal + calcularCostoEnvio(globalSubtotal);
 
@@ -25,21 +25,21 @@ function updateTotals() {
 }
 
 function calcularCostoEnvio(precioBase) {
-  const radioSeleccionado = document.querySelector('input[name="tipoEnvio"]:checked');
+    const radioSeleccionado = document.querySelector('input[name="tipoEnvio"]:checked');
 
-  const factorEnvio = parseFloat(radioSeleccionado.value); 
-  
-  const costoEnvio = precioBase * factorEnvio;
-  
-  return costoEnvio;
+    const factorEnvio = parseFloat(radioSeleccionado.value);
+
+    const costoEnvio = precioBase * factorEnvio;
+
+    return costoEnvio;
 }
 
 // Añadir función auxiliar de formato
 function formatCurrency(value, currency = 'USD') {
-	// Acepta número o string numérico
-	const num = Number(value) || 0;
-	// Formato simple: "USD 1234.00"
-	return `${currency} ${num.toFixed(2)}`;
+    // Acepta número o string numérico
+    const num = Number(value) || 0;
+    // Formato simple: "USD 1234.00"
+    return `${currency} ${num.toFixed(2)}`;
 }
 
 function handleQuantityChange(event) {
@@ -83,7 +83,7 @@ function updateLocalStorageQuantity(productId, newQuantity) {
         // Usar qty para mantener consistencia con el resto del código
         cart[index].qty = newQuantity;
         localStorage.setItem(LOCAL_STORAGE_KEY, JSON.stringify(cart));
-        
+
         // Disparar evento storage manualmente para otros listeners
         window.dispatchEvent(new StorageEvent('storage', {
             key: LOCAL_STORAGE_KEY,
@@ -102,7 +102,7 @@ function removeItem(productId) {
     if (cardToRemove) {
         cardToRemove.remove();
     }
-    
+
     if (cart.length === 0) {
         showEmptyCart();
     } else {
@@ -110,7 +110,7 @@ function removeItem(productId) {
     }
     // Forzar actualización del contador después de eliminar
     window.updateCartCounter && window.updateCartCounter();
-    
+
     // Disparar evento storage manualmente
     window.dispatchEvent(new StorageEvent('storage', {
         key: LOCAL_STORAGE_KEY,
@@ -128,11 +128,11 @@ function createProductCard(productData) {
     const currency = productData.currency || 'USD';
     const image = productData.image || productData.img || productData.thumbnail;
     const quantity = Number(productData.qty || productData.quantity || 1);
-    
-    console.debug('Renderizando producto:', {id, name, cost, quantity}); // Debug
-    
+
+    console.debug('Renderizando producto:', { id, name, cost, quantity }); // Debug
+
     const initialSubtotal = cost * quantity;
-    
+
     return `
         <div class="card p-3 mb-3 cart-item-card" 
              data-unit-cost="${cost}" 
@@ -196,7 +196,7 @@ function renderCart(cartItems) {
         input.addEventListener('input', handleQuantityChange);
         input.addEventListener('change', handleQuantityChange);
     });
-    
+
     document.querySelectorAll(".remove-item-btn").forEach(button => {
         button.addEventListener('click', (e) => {
             const productId = e.currentTarget.getAttribute('data-product-id');
@@ -212,8 +212,8 @@ function showEmptyCart() {
     const detailBox = document.getElementById(DETAIL_BOX_ID);
     const container = document.getElementById(CART_ITEMS_CONTAINER_ID);
 
-    if (container) container.innerHTML = ""; 
-    
+    if (container) container.innerHTML = "";
+
     messageContainer.innerHTML = `
         <div class="alert alert-info text-center" role="alert">
             🛒 **Tu carrito está vacío.** Agrega productos para continuar.
@@ -226,13 +226,13 @@ function showEmptyCart() {
 
 async function loadCart() {
     console.debug('Iniciando carga del carrito...'); // Debug
-    
+
     // Intentar leer del localStorage
     let cartItems = null;
     try {
         const cartDataJSON = localStorage.getItem(LOCAL_STORAGE_KEY);
         console.debug('Cart raw data:', cartDataJSON); // Debug
-        
+
         if (cartDataJSON) {
             cartItems = JSON.parse(cartDataJSON);
             // Si es un objeto con propiedad items/products, tomar el array

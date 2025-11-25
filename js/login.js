@@ -1,8 +1,8 @@
 // Guardar usuario en sessionStorage al hacer login y redirigir a la página original si existe
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
     const form = document.querySelector('form');
     if (form) {
-        form.addEventListener('submit', function(e) {
+        form.addEventListener('submit', function (e) {
             e.preventDefault();
             const username = document.getElementById('username').value.trim();
             const password = document.getElementById('password').value.trim();
@@ -22,5 +22,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-  
+
 });

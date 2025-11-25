@@ -20,35 +20,35 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-const buscador = document.getElementById('buscador');
-buscador.addEventListener('input', function() {
-    const textoBusqueda = buscador.value.toLowerCase();
-    const arrayFiltrado = [];
+    const buscador = document.getElementById('buscador');
+    buscador.addEventListener('input', function () {
+        const textoBusqueda = buscador.value.toLowerCase();
+        const arrayFiltrado = [];
 
-    productsArray.forEach(articulo => {
-        const titulo = articulo.name.toLowerCase();
-        const descripcion = articulo.description.toLowerCase();
+        productsArray.forEach(articulo => {
+            const titulo = articulo.name.toLowerCase();
+            const descripcion = articulo.description.toLowerCase();
 
-        if (titulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda)) {
-            arrayFiltrado.push(articulo);
-        }
+            if (titulo.includes(textoBusqueda) || descripcion.includes(textoBusqueda)) {
+                arrayFiltrado.push(articulo);
+            }
+        });
+
+        showProducts(arrayFiltrado);
     });
 
-    showProducts(arrayFiltrado);
-});
-
     //Event listener para el botón de Detalles
-    document.addEventListener('click', function(e) {
+    document.addEventListener('click', function (e) {
         // Para el botón de Detalles
         if (e.target.closest('.btn-view-details')) {
             const button = e.target.closest('.btn-view-details');
             const productId = button.getAttribute('data-product-id');
-            
+
             localStorage.setItem('selectedProductId', productId);
             window.location.href = 'product-info.html';
             return;
         }
-        
+
         // Para el botón de Comprar (opcional)
         if (e.target.closest('.btn-buy-now')) {
             const button = e.target.closest('.btn-buy-now');
@@ -125,7 +125,7 @@ function showProducts(products) {
 // Función principal para cargar y mostrar productos
 function loadProducts() {
     let catId = localStorage.getItem('catID')
-    fetch(`https://japceibal.github.io/emercado-api/cats_products/${catId}.json`)
+    fetch(`../json/cats_products/${catId}.json`)
         .then(response => {
             if (!response.ok) throw new Error('Error en la respuesta');
             return response.json();

@@ -15,8 +15,8 @@ function obtenerIdProducto() {
         const idFromUrl = params.get('id');
         if (idFromUrl) {
             // Guardar para compatibilidad con otras partes que usen storage
-            try { sessionStorage.setItem('selectedProductId', idFromUrl); } catch (e) {}
-            try { localStorage.setItem('selectedProductId', idFromUrl); } catch (e) {}
+            try { sessionStorage.setItem('selectedProductId', idFromUrl); } catch (e) { }
+            try { localStorage.setItem('selectedProductId', idFromUrl); } catch (e) { }
             return idFromUrl;
         }
     } catch (e) {
@@ -43,7 +43,7 @@ async function cargarProductoDesdeAPI(productoId) {
         let product = null;
 
         for (const categoriaId of categorias) {
-            const response = await fetch(`https://japceibal.github.io/emercado-api/cats_products/${categoriaId}.json`);
+            const response = await fetch(`./js/json/cats_products/${categoriaId}.json`);
             const data = await response.json();
             product = data.products.find(p => p.id == productoId);
             if (product) break;
@@ -160,7 +160,7 @@ function cargarComentariosDesdeAPI(productoId) {
     });
 
     // También cargar los de la API
-    const url = `https://japceibal.github.io/emercado-api/products_comments/${productoId}.json`;
+    const url = `./js/json/products_comments/${productoId}.json`;
     fetch(url)
         .then(res => res.json())
         .then(data => {
@@ -325,7 +325,7 @@ function showProducts(products) {
 // Función principal para cargar y mostrar productos
 function loadProducts() {
     let catId = localStorage.getItem('catID')
-    fetch(`https://japceibal.github.io/emercado-api/cats_products/${catId}.json`)
+    fetch(`./js/json/cats_products/${catId}.json`)
         .then(response => {
             if (!response.ok) throw new Error('Error en la respuesta');
             return response.json();
