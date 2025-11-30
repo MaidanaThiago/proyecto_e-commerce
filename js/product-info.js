@@ -37,21 +37,34 @@ function obtenerIdProducto() {
 
 // --------- Producto ---------
 async function cargarProductoDesdeAPI(productoId) {
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+
     try {
         mostrarCargando();
-        const categorias = [101, 102, 103, 104, 105];
-        let product = null;
+        
+        const response = await fetch(`http://localhost:3000/api/products/${productoId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
 
-        for (const categoriaId of categorias) {
-            const response = await fetch(`./js/json/cats_products/${categoriaId}.json`);
-            const data = await response.json();
-            product = data.products.find(p => p.id == productoId);
-            if (product) break;
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+            return;
         }
 
-        if (!product) throw new Error('Producto no encontrado');
+        if (!response.ok) throw new Error('Producto no encontrado');
 
-        producto = product
+        const product = await response.json();
+        producto = product;
         actualizarUIProducto(product);
         cargarImagenesProducto(product);
         ocultarCargando();
@@ -152,7 +165,11 @@ function mostrarError(mensaje) {
 }
 
 // --------- Comentarios ---------
-function cargarComentariosDesdeAPI(productoId) {
+async function cargarComentariosDesdeAPI(productoId) {
+    const token = localStorage.getItem('token');
+    
+    if (!token) return;
+
     const comentariosGuardados = JSON.parse(localStorage.getItem(`comments_${productoId}`)) || [];
 
     comentariosGuardados.forEach(comentario => {
@@ -160,15 +177,25 @@ function cargarComentariosDesdeAPI(productoId) {
     });
 
     // También cargar los de la API
-    const url = `./js/json/products_comments/${productoId}.json`;
-    fetch(url)
-        .then(res => res.json())
-        .then(data => {
+    try {
+        const response = await fetch(`http://localhost:3000/api/products_comments/${productoId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
+        });
+
+        if (response.ok) {
+            const data = await response.json();
             data.forEach(comentario => {
                 const fecha = new Date(comentario.dateTime).toLocaleDateString('es-ES');
                 agregarComentarioAlDOM(comentario.user, comentario.description, comentario.score, fecha);
             });
-        });
+        }
+    } catch (error) {
+        console.error('Error cargando comentarios:', error);
+    }
 }
 
 function agregarComentarioAlDOM(user, comment, rating, date) {
@@ -323,26 +350,35 @@ function showProducts(products) {
 }
 
 // Función principal para cargar y mostrar productos
-function loadProducts() {
-    let catId = localStorage.getItem('catID')
-    fetch(`./js/json/cats_products/${catId}.json`)
-        .then(response => {
-            if (!response.ok) throw new Error('Error en la respuesta');
-            return response.json();
-        })
-        .then(data => {
-            productsArray = data.products; // Guardar productos en variable global
-            productsArray = productsArray.filter(elemento => elemento.id != obtenerIdProducto()); // Quita del Array el elemento actual de la página de product-info para que no lo muestre en "Productos Relacionados"
-            showProducts(productsArray); // Muestra el array de "Productos Relacionados"
-        })
-        .catch(error => {
-            console.error('Error cargando productos:', error);
-            document.getElementById('productsContainer').innerHTML = `
-                <div class="col-12 text-center">
-                    <p class="text-danger">Error al cargar los productos: ${error.message}</p>
-                </div>
-            `;
+async function loadProducts() {
+    const catId = localStorage.getItem('catID');
+    const token = localStorage.getItem('token');
+    
+    if (!token) return;
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/cats_products/${catId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
         });
+
+        if (response.ok) {
+            const data = await response.json();
+            productsArray = data.products;
+            productsArray = productsArray.filter(elemento => elemento.id != obtenerIdProducto());
+            showProducts(productsArray);
+        }
+    } catch (error) {
+        console.error('Error cargando productos:', error);
+        document.getElementById('productsContainer').innerHTML = `
+            <div class="col-12 text-center">
+                <p class="text-danger">Error al cargar los productos: ${error.message}</p>
+            </div>
+        `;
+    }
 }
 
 // Cuando el documento se carga

@@ -123,25 +123,43 @@ function showProducts(products) {
 }
 
 // Función principal para cargar y mostrar productos
-function loadProducts() {
-    let catId = localStorage.getItem('catID')
-    fetch(`../json/cats_products/${catId}.json`)
-        .then(response => {
-            if (!response.ok) throw new Error('Error en la respuesta');
-            return response.json();
-        })
-        .then(data => {
-            productsArray = data.products; // Guardar productos en variable global
-            showProducts(productsArray);   // Mostrar todos al inicio
-        })
-        .catch(error => {
-            console.error('Error cargando productos:', error);
-            document.getElementById('productsContainer').innerHTML = `
-                <div class="col-12 text-center">
-                    <p class="text-danger">Error al cargar los productos: ${error.message}</p>
-                </div>
-            `;
+async function loadProducts() {
+    const catId = localStorage.getItem('catID');
+    const token = localStorage.getItem('token');
+    
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+
+    try {
+        const response = await fetch(`http://localhost:3000/api/cats_products/${catId}`, {
+            method: 'GET',
+            headers: {
+                'Authorization': `Bearer ${token}`,
+                'Content-Type': 'application/json'
+            }
         });
+
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem('token');
+            window.location.href = 'login.html';
+            return;
+        }
+
+        if (!response.ok) throw new Error('Error en la respuesta');
+        
+        const data = await response.json();
+        productsArray = data.products;
+        showProducts(productsArray);
+    } catch (error) {
+        console.error('Error cargando productos:', error);
+        document.getElementById('productsContainer').innerHTML = `
+            <div class="col-12 text-center">
+                <p class="text-danger">Error al cargar los productos: ${error.message}</p>
+            </div>
+        `;
+    }
 }
 // Array para guardar los productos
 

@@ -1,0 +1,34 @@
+[
+    {
+        "id": 1,
+        "username": "admin",
+        "password": "admin123",
+        "email": "admin@ecommerce.com",
+        "role": "admin",
+        "active": true
+    },
+    {
+        "id": 2,
+        "username": "usuario1",
+        "password": "pass123",
+        "email": "usuario1@example.com",
+        "role": "user",
+        "active": true
+    },
+    {
+        "id": 3,
+        "username": "vendedor",
+        "password": "vend123",
+        "email": "vendedor@ecommerce.com",
+        "role": "seller",
+        "active": true
+    },
+    {
+        "id": 4,
+        "username": "inactivo",
+        "password": "test123",
+        "email": "inactivo@example.com",
+        "role": "user",
+        "active": false
+    }
+]

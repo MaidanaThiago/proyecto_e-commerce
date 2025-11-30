@@ -1,18 +1,8 @@
 const express = require("express");
-const path = require("path");
 const router = express.Router();
+const commentsController = require("../controllers/commentsController");
 
-// Obtener comentarios de un producto específico
-router.get("/:id", (req, res) => {
-    const id = req.params.id;
-    const filePath = path.join(__dirname, `../data/products_comments/${id}.json`);
-
-    try {
-        const data = require(filePath);
-        res.json(data);
-    } catch {
-        res.status(404).json({ error: "Comentarios no encontrados" });
-    }
-});
+// GET /api/products_comments/:id
+router.get("/:id", commentsController.getCommentsByProductId);
 
 module.exports = router;

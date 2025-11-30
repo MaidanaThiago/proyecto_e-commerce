@@ -111,7 +111,12 @@ document.addEventListener('DOMContentLoaded', function () {
     userNameText.textContent = userName;
   }
 
-  document.getElementById('logoutBtn')?.addEventListener('click', function () {
+  document.getElementById('logoutBtn')?.addEventListener('click', function (e) {
+    e.preventDefault();
+    // Limpiar todos los datos de autenticación
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
+    localStorage.removeItem('profileData');
     sessionStorage.removeItem('usuario');
     window.location.href = 'login.html';
   });

@@ -1,18 +1,8 @@
 const express = require("express");
-const path = require("path");
 const router = express.Router();
+const userCartController = require("../controllers/userCartController");
 
-// Obtener carrito de un usuario específico
-router.get("/:userId", (req, res) => {
-    const userId = req.params.userId;
-    const filePath = path.join(__dirname, `../data/user_cart/${userId}.json`);
-
-    try {
-        const data = require(filePath);
-        res.json(data);
-    } catch {
-        res.status(404).json({ error: "Carrito no encontrado" });
-    }
-});
+// GET /api/user_cart/:userId
+router.get("/:userId", userCartController.getUserCart);
 
 module.exports = router;
